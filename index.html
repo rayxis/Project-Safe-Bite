@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Safe Bite</title>
-		<link rel="stylesheet" href="styles.css">
+		<link rel="stylesheet" href="assets/css/styles.css">
 	</head>
 
 	<body>
@@ -13,7 +13,7 @@
 			<button id="allergy-button">Submit Allergies</button>
 			<button id="recipe-button" disabled>Search for Recipes</button>
 		</header>
-	
+
 		<section id="allergy-form" style="display:none;">
 			<h2>Enter Your Allergies</h2>
 			<form id="allergy-form-details">
@@ -29,16 +29,17 @@
 					<label><input type="checkbox" name="allergens" value="Fish"> Fish</label><br>
 					<label><input type="checkbox" name="allergens" value="Shellfish"> Shellfish</label><br>
 				</div>
-			</div>
-            <button type="submit">Submit</button>
-        </form>
-    </section>
+				</div>
+				<button type="submit">Submit</button>
+			</form>
+		</section>
 
-    <section id="allergy-list" style="display:none;">
-        <h2>Your Submitted Allergies</h2>
-        <ul id="submitted-allergies"></ul>
-    </section>
+		<section id="allergy-list" style="display:none;">
+			<h2>Your Submitted Allergies</h2>
+			<ul id="submitted-allergies"></ul>
+		</section>
 
-    <script src="script.js"></script>
+		<script src="assets/js/secret.js"></script>
+		<script src="assets/js/script.js"></script>
 	</body>
 </html>
