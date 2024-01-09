@@ -2,9 +2,43 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Title</title>
+		<title>Safe Bite</title>
+		<link rel="stylesheet" href="styles.css">
 	</head>
-	<body>
 
+	<body>
+		<header id="welcome-section">
+			<h1>Welcome to Safe Bite</h1>
+			<p>Don't let your allergies bite you!</p>
+			<button id="allergy-button">Submit Allergies</button>
+			<button id="recipe-button" disabled>Search for Recipes</button>
+		</header>
+	
+		<section id="allergy-form" style="display:none;">
+			<h2>Enter Your Allergies</h2>
+			<form id="allergy-form-details">
+				<input type="text" placeholder="Enter Allergens" id="allergens">
+				<h3>Common Allergens:</h3>
+				<div id="common-allergens">
+					<label><input type="checkbox" name="allergens" value="Peanuts"> Peanuts</label><br>
+					<label><input type="checkbox" name="allergens" value="Tree Nuts"> Tree Nuts</label><br>
+					<label><input type="checkbox" name="allergens" value="Milk"> Milk</label><br>
+					<label><input type="checkbox" name="allergens" value="Eggs"> Eggs</label><br>
+					<label><input type="checkbox" name="allergens" value="Wheat"> Wheat</label><br>
+					<label><input type="checkbox" name="allergens" value="Soy"> Soy</label><br>
+					<label><input type="checkbox" name="allergens" value="Fish"> Fish</label><br>
+					<label><input type="checkbox" name="allergens" value="Shellfish"> Shellfish</label><br>
+				</div>
+			</div>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section id="allergy-list" style="display:none;">
+        <h2>Your Submitted Allergies</h2>
+        <ul id="submitted-allergies"></ul>
+    </section>
+
+    <script src="script.js"></script>
 	</body>
 </html>
