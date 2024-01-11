@@ -13,17 +13,13 @@
 			<h1>Take a Bite!</h1>
 		</header>
 	
-		<div id="search-container">
+		<form id="search-form">
 			<input type="text" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
 			<button id="search-button">🔍</button>
-			<div id="search-history" style="display: none;">
-				<ul>
-					<li>Pizza</li>
-					<li>Chicken Curry</li>
-					<!-- More search history items  example: can delete --> 
-				</ul>
-			</div>
-		</div>
+			<ul id="search-history" style="display: none;">
+				<!-- Search history will be populated here by JavaScript -->
+			</ul>
+		</form>
 
 		<section id="recipe-display">
 			<div id="recipe-info">
