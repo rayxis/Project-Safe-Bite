@@ -1,60 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8">
-		<title>Safe Bite</title>
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+		<title>Take a Bite!</title>
 		<link rel="icon" type="image/png" href="/Project-Safe-Bite/assets/js/images/SB-icon.png">
-		<link rel="stylesheet" href="assets/css/styles.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="./assets/css/style.css">
 	</head>
 
 	<body>
-		<header id="welcome-section">
-			<h1>Welcome to Safe Bite</h1>
-			<p>Don't let your allergies bite you!</p>
-			<button id="allergy-button">Submit Allergies</button>
-			<button id="recipe-button" disabled>Search for Recipes</button>
+		<header>
+			<h1>Take a Bite!</h1>
 		</header>
+	
+		<div id="search-container">
+			<input type="text" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
+			<button id="search-button">🔍</button>
+			<div id="search-history" style="display: none;">
+				<ul>
+					<li>Pizza</li>
+					<li>Chicken Curry</li>
+					<!-- More search history items  example: can delete --> 
+				</ul>
+			</div>
+		</div>
 
-		<section id="allergy-form" style="display:none;">
-			<h2>Enter Your Allergies</h2>
-			<form id="allergy-form-details">
-				<input type="text" placeholder="Enter Allergens" id="allergens">
-				<h3>Common Allergens:</h3>
-				<div id="common-allergens">
-					<label><input type="checkbox" name="allergens" value="Peanuts"> Peanuts</label><br>
-					<label><input type="checkbox" name="allergens" value="Tree Nuts"> Tree Nuts</label><br>
-					<label><input type="checkbox" name="allergens" value="Milk"> Milk</label><br>
-					<label><input type="checkbox" name="allergens" value="Eggs"> Eggs</label><br>
-					<label><input type="checkbox" name="allergens" value="Wheat"> Wheat</label><br>
-					<label><input type="checkbox" name="allergens" value="Soy"> Soy</label><br>
-					<label><input type="checkbox" name="allergens" value="Fish"> Fish</label><br>
-					<label><input type="checkbox" name="allergens" value="Shellfish"> Shellfish</label><br>
-				</div>
-				</div>
-				<button type="submit">Submit</button>
-			</form>
-		</section>
-
-		<section id="recipe-search-section" style="display:none;">
-			<h2>Find a Recipe</h2>
-			<form id="recipe-search-form">
-				<input type="text" placeholder="Type of cuisine or food" id="recipe-search">
-				<button type="submit">Search for Recipes</button>
-			</form>
-		</section>
-
-		<section id="recipe-results-section" style="display:none;">
-			<h2>Recipe Results</h2>
-			<div id="recipes-container">
-				<!-- Recipes will be inserted here -->
+		<section id="recipe-display">
+			<div id="recipe-info">
+				<!-- Recipe info from  Spoonacular API-->
+			</div>
+			
+			<div id="recipe-image">
+				<!-- Image from Unsplash API -->
 			</div>
 		</section>
 
-		<section id="allergy-list" style="display:none;">
-			<h2>Your Submitted Allergies</h2>
-			<ul id="submitted-allergies"></ul>
-		</section>
 
+		<script src="https://code.jquery.com/jquery-3.7.1.js"
+				integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+				crossorigin="anonymous"></script>
 		<script src="assets/js/secret.js"></script>
 		<script src="assets/js/script.js"></script>
 	</body>
