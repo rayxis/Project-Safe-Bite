@@ -23,10 +23,14 @@
 		<form id="search-form">
 			<input type="text" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
 			<button id="search-button">🔍</button>
-			<ul id="search-history" style="display: none;">
-				<!-- Search history will be populated here by JavaScript -->
+			<ul id="search-results">
+				<!-- Search results will be populated here by JavaScript -->
 			</ul>
 		</form>
+
+<!--		<ul id="search-history" style="display: none;">-->
+<!--			&lt;!&ndash; Search history will be populated here by JavaScript &ndash;&gt;-->
+<!--		</ul>-->
 
 		<section id="recipe-display">
 			<div id="recipe-info">
@@ -38,9 +42,10 @@
 			</div>
 		</section>
 
-		<template id="">
-			<li class="search-item"> 
-				<!-- placeholder -->
+		<template id="search-results-item">
+			<li class="search-item">
+				<img class="search-image"/>
+				<p class="search-title"></p>
 			</li>
 		</template>
 

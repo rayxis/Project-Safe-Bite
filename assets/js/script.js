@@ -25,6 +25,9 @@ class safeBite {
 	settings = {
 		cacheKey: 'searchHistory'    // Cache Location
 	};
+	templates = {
+		searchResultsItem: document.querySelector('#search-results-item').content
+	}
 
 	constructor() {
 		// Load the API key
@@ -165,23 +168,21 @@ class safeBite {
 
 		const recipeBuild = recipe => {
 			// TODO: Consider putting this in a <template> instead of building it.
-			const recipeElement = document.createElement('li');
-			const recipeImage   = document.createElement('img');
-			const recipeTitle   = document.createElement('div');
+			const recipeElement = this.templates.searchResultsItem.cloneNode(true).firstElementChild;
+			const recipeImage   = recipeElement.querySelector('.search-image');
+			const recipeTitle   = recipeElement.querySelector('.search-title');
 
+			// Set the recipe title
 			recipeTitle.textContent = recipe.title;
 
 			// Add the image location and title.
 			recipeImage.src = recipe.image;
 			recipeImage.alt = recipe.title;
 
-			// Add the image to the list item.
-			recipeElement.appendChild(recipeImage);
-			recipeElement.appendChild(recipeTitle);
-
 			// Add an event listener to the recipe list item
 			this.eventClickSave(recipeElement, 'recipeBuild', (event) => this.recipeView(event.target.dataset.id));
 
+			// Return the element
 			return recipeElement;
 		};
 
