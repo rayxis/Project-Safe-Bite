@@ -1,5 +1,26 @@
+/* Import Monserrat font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
+
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+header {
+    background: #e64747 !important;
+}
+
+button {
+    border-radius: 5px !important;
+}
+
+.title-bar-left {
+    text-align: center;
+}
+
+.title-bar-left h1 {
+    margin-left: 8vw;
+    margin-right: 5vw;
+    font-weight: 800;
+    font-style: italic;
 }
