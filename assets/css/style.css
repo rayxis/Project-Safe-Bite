@@ -2,9 +2,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat');
 
 
-* {
-    font-family: 'Montserrat', sans-serif !important;
+* { 
+  font-family: 'Montserrat', sans-serif !important;
+
 }
+
+#search-form {
+    display: flex;
+    align-items: center;
+  }
+  
+  #search-recipe {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  #search-button {
+    padding: 8px;
+    border: none;
+    background-color: #0b13e4;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #search-history {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+  }
+  
+  /* Optional styles for search history items */
+  #search-history li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Show search history when search input is focused */
+  #search-recipe:focus + #search-history {
+    display: block;
+  }
 
 header {
     background: #e64747 !important;
