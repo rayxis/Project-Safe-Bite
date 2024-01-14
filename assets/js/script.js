@@ -1,33 +1,34 @@
 class safeBite {
 	// API URLs
-	apis     = {
+	apis      = {
 		spoonacular: new URL('https://api.spoonacular.com/recipes/complexSearch'),
 		unsplash:    new URL('https://api.unsplash.com/search/photos')
 	};
 	// Data Storage
-	data     = {
+	data      = {
 		apiKeys:       {},  // API keys. Filled by constructor.
 		functions:     [],  // Events functions list
 		searchHistory: []   // Search history
 	};
 	// Elements
-	elements = {
-		searchButton:  document.querySelector('#search-button'),
-		searchHistory: document.querySelector('#search-history'),
-		searchInput:   document.querySelector('#search-recipe'),
-		searchResults: document.querySelector('#search-results')
+	elements  = {
+		searchButton:  document.querySelector('#search-button'),    // Search button
+		searchHistory: document.querySelector('#search-history'),   // Search history list?
+		searchInput:   document.querySelector('#search-recipe'),    // Search recipe input
+		searchResults: document.querySelector('#search-results')    // Search results list
 	};
 	// Errors
-	errors   = {
+	errors    = {
 		searchInputEmpty: 'You must enter text.'
 	};
 	// Settings
-	settings = {
+	settings  = {
 		cacheKey: 'searchHistory'    // Cache Location
 	};
 	templates = {
-		searchResultsItem: document.querySelector('#search-results-item').content
-	}
+		searchResultsItem: document.querySelector('#search-results-item').content,
+		searchHistoryItem: document.querySelector('#search-history-item').content
+	};
 
 	constructor() {
 		// Load the API key
@@ -39,6 +40,10 @@ class safeBite {
 		// Add an event listener to the search button
 		this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
 	}
+
+	/***
+	 * API Functions
+	 ***/
 
 	// Load the search history cache
 	apiCacheLoad() {
@@ -141,33 +146,11 @@ class safeBite {
 		return this.data.functions[funcName];
 	}
 
-	// Search for images
-	imageSearch(query) {
-		try {
-			// If there's no text entered in in the search box, throw an error.
-			if (!this.elements.searchInput.value.length) throw new Error('searchInputEmpty');
-
-			// Get the API URL for Unsplash, and build the search parameters.
-			const url  = this.apis.unsplash;
-			url.search = new URLSearchParams({
-				                                 client_id: this.data.apiKeys.unsplash.accessKey,
-				                                 query:     this.elements.searchInput.value
-			                                 });
-			// Fetch the JSON
-			return this.apiFetchJSON(this.apis.unsplash, data => console.log(data));
-		} catch (error) {
-			// Log any errors.
-			console.log('recipeSearch Error:', this.errors[error.message]);
-			return false;
-		}
-	}
-
-	recipeListBuild(recipeData) {
+	recipeResultList(recipeData) {
 		// Remove all the children elements.
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
 
 		const recipeBuild = recipe => {
-			// TODO: Consider putting this in a <template> instead of building it.
 			const recipeElement = this.templates.searchResultsItem.cloneNode(true).firstElementChild;
 			const recipeImage   = recipeElement.querySelector('.search-image');
 			const recipeTitle   = recipeElement.querySelector('.search-title');
@@ -180,7 +163,7 @@ class safeBite {
 			recipeImage.alt = recipe.title;
 
 			// Add an event listener to the recipe list item
-			this.eventClickSave(recipeElement, 'recipeBuild', (event) => this.recipeView(event.target.dataset.id));
+			this.eventClickSave(recipeElement, 'recipeBuild', (event) => this.recipeViewOpen(event.target.dataset.id));
 
 			// Return the element
 			return recipeElement;
@@ -189,10 +172,6 @@ class safeBite {
 		// Loop through the recipe results and fill the list.
 		recipeData.results.forEach(
 			recipe => this.elements.searchResults.appendChild(recipeBuild(recipe)));
-	}
-
-	recipeListUpdate() {
-
 	}
 
 	// Search for recipes
@@ -215,20 +194,21 @@ class safeBite {
 
 			// Check if this item has already been searched for (to save API calls)
 			if (searchResult = this.data.searchHistory.find(item => item.searchQuery === searchQuery)) {
-				this.recipeListBuild(searchResult);
+				this.recipeResultList(searchResult);
 			}
 
 			// Fetch the JSON
 			else this.apiFetchJSON(this.apis.spoonacular, recipeData => {
 				console.log(recipeData);
 
-				// Add the search to the array.
+				// Save the search history
 				this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
 				this.apiCacheSave();
 
-				this.recipeListBuild(recipeData);
-				// Do an image search based off of the input
-				// this.imageSearch(searchQuery)
+				// Build the recipe result list.
+				this.recipeResultList(recipeData);
+
+				// TODO: Do secondary API action here
 			});
 
 		} catch (error) {
@@ -238,7 +218,50 @@ class safeBite {
 		}
 	}
 
-	recipeView(recipeID) {
+	recipeHistoryClear() {
+		// Clear the searchHistory array, save the cache and clear the history list.
+		this.data.searchHistory = [];
+		this.apiCacheSave();
+		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
+	}
+
+	// Fill the
+	recipeHistoryList() {
+		// Empty the list and remove the event listeners.
+		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
+
+		// Function to build search history list items.
+		const historyBuild = search => {
+			// TODO: Consider putting this in a <template> instead of building it.
+			// const searchElement = this.templates.searchHistoryItem.cloneNode(true).firstElementChild;
+			const searchElement = document.createElement('li');
+			searchElement.classList.add('search-item');
+			searchElement.textContent = search.searchQuery;
+
+			// Add an event listener to the recipe list item
+			this.eventClickSave(searchElement, 'historyBuild', (event) => {
+				// Set the search box with the search text, and then click the search button.
+				this.elements.searchInput.value = event.target.textContent;
+				this.elements.searchButton.click();
+			});
+
+			// Return the element
+			return searchElement;
+		};
+
+		// Loop through the
+		this.data.searchHistory.forEach(
+			recipe => this.elements.searchHistory.appendChild(historyBuild(recipe)));
+	}
+
+	// Close the recipe view element
+	recipeViewClose() {
+		// TODO: Add Recipe View Close Code Here
+
+	}
+
+	// Open the recipe view element and populate it
+	recipeViewOpen(recipeID) {
 		// TODO: Add Recipe View Code Here
 	}
 }
