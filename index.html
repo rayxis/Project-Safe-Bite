@@ -5,28 +5,36 @@
 		<title>Take a BITE!</title>
 		<link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
 		<link rel="icon" type="image/png" href="/Project-Safe-Bite/assets/js/images/SB-icon.png">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.css"
+		crossorigin="anonymous">
 		<link rel="stylesheet" href="./assets/css/style.css">
 	</head>
 
 	<body>
-		<header class="title-bar">
-            <div class="title-bar-left">
+		<!-- Header -->
+		<div class="border-bottom">
+			<header class="title-bar mb-1vh">
                 <h1 class="title-bar-title">Take a BITE!</h1>
                 <img src="./assets/images/logo.png">
-            </div>
-            <div class="title-bar-right">
-                <button type="button" class="button secondary">Search History</button>
-            </div>
-        </header>
-	
-		<form id="search-form">
-			<input type="text" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
-			<button id="search-button">🔍</button>
-			<ul id="search-results">
-				<!-- Search results will be populated here by JavaScript -->
-			</ul>
-		</form>
+			</header>
+        </div>
+
+		<!-- Wrapper for Main + Aside Content -->
+		<div class="grid-x grid-padding-y grid-padding-x">
+			<!-- Main Content -->
+			<main class="cell medium-8">
+				<!-- Search Bar -->
+				<form id="search-form">
+					<input type="search" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
+					<button type="submit" class="button secondary" id="search-button"><img src="./assets/images/search.png"></button>
+				</form>
+				<!-- Recipe Search Results -->
+				<div class="grid-container mt-2rem">
+					<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0"
+						id="search-results">
+						<!-- Search results will be populated here by JavaScript -->
+					</ul>
+				</div>
 
 <!--		<ul id="search-history" style="display: none;">-->
 <!--			&lt;!&ndash; Search history will be populated here by JavaScript &ndash;&gt;-->
@@ -41,14 +49,45 @@
 				<!-- Image from Unsplash API -->
 			</div>
 		</section>
+			</main>
+			<!-- Aside Content -->
+			<aside class="cell medium-4">
+				<!-- Search History -->
+				<div class="grid-x align-middle align-justify">
+					<h3 class="mb-0">Search History: </h3>
+					<button type="reset" class="button alert" id="clear-history" aria-label="Delete History"><img
+							src="./assets/images/trash-can.png"></button>
+				</div>
+				<div>
+					<ul class="no-bullet border-top ml-0 mt-1vh pl-3rem" id="search-history">
+						<!-- Search history will be populated here by JavaScript-->
+					</ul>
+				</div>
+			</aside>
+		</div>
 
+		<!-- Template for recipe search result card -->
 		<template id="search-results-item">
-			<li class="search-item">
-				<img class="search-image"/>
-				<p class="search-title"></p>
-			</li>
+			<div class="grid-x cell">
+				<div class="card">
+					<img class="search-image" />
+					<div class="grid-x card-section align-middle align-center">
+						<p class="search-title"></p>
+					</div>
 		</template>
 
+		<!-- Template for search history button -->
+		<template id="search-history-item">
+			<li><button type="button" class="clear button search-query"></button></li>
+		</template>
+
+		<!-- Footer -->
+		<div class="border-top">
+			<footer class="footer mt-1vh ">
+				<h6 class="mb-0">Created By</h6>
+				<h6 class="mb-0">Credits</h6>
+			</footer>
+		</div>
 
 		<script src="https://code.jquery.com/jquery-3.7.1.js"
 				integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
