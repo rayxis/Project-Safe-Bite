@@ -1,12 +1,70 @@
 /* Import Monserrat font */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat');
 
-
+/* Universal style */
 * { 
   font-family: 'Montserrat', sans-serif !important;
-
 }
 
+/* Resusable classes */
+.border-bottom {
+    border-bottom:#FFDB2B 0.3rem solid;
+  }
+  
+  .border-top {
+    border-top:#FFDB2B 0.3rem solid;
+  }
+  
+  .button { 
+    border-radius: 10px;
+    padding: 0.5em 0.5em;
+    margin: 0;
+  }
+  
+  .pl-3rem {
+    padding-left: 0.3rem;
+  }
+  
+  .ml-0 {
+    margin-left: 0;
+  }
+  
+  .mt-1vh {
+    margin-top: 1vh;
+  }
+  
+  .mb-1vh {
+    margin-bottom: 1vh;
+  }
+  
+  .mb-0 {
+    margin-bottom: 0;
+  }
+  
+  .mt-2rem {
+    margin-top: 2rem;
+  }
+  
+  /* Header */
+  .title-bar {
+    background: #e64747 !important;
+    justify-content: center;
+    gap: 4vw;
+  }
+  
+  .title-bar-title {
+    font-style: italic;
+  }
+  
+  
+  @media screen and (max-width: 425px) {
+    .title-bar img {
+      height: 40px;
+    }
+  }
+
+/* Main */
+/* Search Bar */
 #search-form {
     display: flex;
     align-items: center;
@@ -28,12 +86,12 @@
     cursor: pointer;
   }
   
-  #search-history {
+  /* #search-history {
     list-style: none;
     padding: 0;
     margin: 0;
     display: none;
-  }
+  } */
   
   /* Optional styles for search history items */
   #search-history li {
@@ -46,21 +104,32 @@
     display: block;
   }
 
-header {
-    background: #e64747 !important;
-}
+/* Search Results */
+.card {
+    border-radius: 5px;
+  }
+  
+  .card-section {
+    background: #8fb935;
+  }
 
-button {
-    border-radius: 5px !important;
-}
-
-.title-bar-left {
+/* Aside */
+/* Search History */
+#search-history {
+    background: rgb(128, 128, 128, 20%);
+    border-bottom-left-radius: 15px 15px;
+    border-bottom-right-radius: 15px 15px;
+  }
+  
+  @media screen and (max-width: 425px) {
+    aside {
+      border-top:#FFDB2B 0.3rem dashed;
+    }
+  }
+  
+  /* Footer */
+  .footer {
+    background: rgb(128, 128, 128, 60%);
     text-align: center;
-}
-
-.title-bar-left h1 {
-    margin-left: 8vw;
-    margin-right: 5vw;
-    font-weight: 800;
-    font-style: italic;
-}
+    padding: 1vh 0;
+  }
