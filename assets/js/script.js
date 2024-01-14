@@ -50,6 +50,7 @@ class safeBite {
 		// Pull the searchHistory from localStorage and parse it into an array. If this is unsuccessful, use the
 		// default value (or any other value) in searchHistory.
 		this.data.searchHistory = JSON.parse(localStorage.getItem(this.settings.cacheKey)) ?? this.data.searchHistory;
+		this.recipeHistoryList();
 	}
 
 	// Cache the search history
@@ -146,6 +147,40 @@ class safeBite {
 		return this.data.functions[funcName];
 	}
 
+	// Clears the recipe history from localStorage, and the array.
+	recipeHistoryClear() {
+		// Clear the searchHistory array, save the cache and clear the history list.
+		this.data.searchHistory = [];
+		this.apiCacheSave();
+		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
+	}
+
+	// Fill the
+	recipeHistoryList() {
+		// Empty the list and remove the event listeners.
+		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
+
+		// Function to build search history list items.
+		const historyBuild = search => {
+			const searchElement = this.templates.searchHistoryItem.cloneNode(true).firstElementChild;
+			searchElement.textContent = search.searchQuery;
+
+			// Add an event listener to the recipe list item
+			this.eventClickSave(searchElement, 'historyBuild', (event) => {
+				// Set the search box with the search text, and then click the search button.
+				this.elements.searchInput.value = event.target.textContent;
+				this.elements.searchButton.click();
+			});
+
+			// Return the element
+			return searchElement;
+		};
+
+		// Loop through the
+		this.data.searchHistory.forEach(
+			recipe => this.elements.searchHistory.appendChild(historyBuild(recipe)));
+	}
+
 	recipeResultList(recipeData) {
 		// Remove all the children elements.
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
@@ -204,6 +239,7 @@ class safeBite {
 				// Save the search history
 				this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
 				this.apiCacheSave();
+				this.recipeHistoryList();
 
 				// Build the recipe result list.
 				this.recipeResultList(recipeData);
@@ -216,42 +252,6 @@ class safeBite {
 			console.log('recipeSearch Error:', this.errors[error.message]);
 			return false;
 		}
-	}
-
-	recipeHistoryClear() {
-		// Clear the searchHistory array, save the cache and clear the history list.
-		this.data.searchHistory = [];
-		this.apiCacheSave();
-		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
-	}
-
-	// Fill the
-	recipeHistoryList() {
-		// Empty the list and remove the event listeners.
-		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
-
-		// Function to build search history list items.
-		const historyBuild = search => {
-			// TODO: Consider putting this in a <template> instead of building it.
-			// const searchElement = this.templates.searchHistoryItem.cloneNode(true).firstElementChild;
-			const searchElement = document.createElement('li');
-			searchElement.classList.add('search-item');
-			searchElement.textContent = search.searchQuery;
-
-			// Add an event listener to the recipe list item
-			this.eventClickSave(searchElement, 'historyBuild', (event) => {
-				// Set the search box with the search text, and then click the search button.
-				this.elements.searchInput.value = event.target.textContent;
-				this.elements.searchButton.click();
-			});
-
-			// Return the element
-			return searchElement;
-		};
-
-		// Loop through the
-		this.data.searchHistory.forEach(
-			recipe => this.elements.searchHistory.appendChild(historyBuild(recipe)));
 	}
 
 	// Close the recipe view element
