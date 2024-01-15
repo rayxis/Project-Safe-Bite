@@ -35,21 +35,8 @@
 						<!-- Search results will be populated here by JavaScript -->
 					</ul>
 				</div>
-
-<!--		<ul id="search-history" style="display: none;">-->
-<!--			&lt;!&ndash; Search history will be populated here by JavaScript &ndash;&gt;-->
-<!--		</ul>-->
-
-		<section id="recipe-display">
-			<div id="recipe-info">
-				<!-- Recipe info from  Spoonacular API-->
-			</div>
-			
-			<div id="recipe-image">
-				<!-- Image from Unsplash API -->
-			</div>
-		</section>
 			</main>
+
 			<!-- Aside Content -->
 			<aside class="cell medium-4">
 				<!-- Search History -->
@@ -63,16 +50,49 @@
 						<!-- Search history will be populated here by JavaScript-->
 					</ul>
 				</div>
+
+				<!-- Favorites Section -->
+				<div class="favorites-section border-top mt-1vh">
+					<h3>Favorites:</h3>
+					<ul id="favorites-list" class="no-bullet pl-3rem">
+						<!-- Favorites will be populated here by JavaScript -->
+					</ul>
+					<div class="grid-x align-middle align-justify">
+						<button type="button" class="button" id="show-favorites">Show Favorites</button>
+						<button type="button" class="button alert" id="clear-favorites">Clear Favorites</button>
+					</div>
+				</div>
+
 			</aside>
+
+<!-- Favorites Modal -->
+<div class="reveal" id="favorites-modal" data-reveal>
+    <div class="modal-header">
+        <h2>Favorites</h2>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-content">
+        <ul id="modal-favorites-list" class="no-bullet">
+            <!-- Favorite items will be listed here in the modal -->
+        </ul>
+    </div>
+    <div class="modal-footer grid-x align-right">
+        <button class="button secondary small" data-close>Close</button>
+    </div>
+</div>
 		</div>
 
 		<!-- Template for recipe search result card -->
 		<template id="search-results-item">
 			<div class="grid-x cell">
 				<div class="card">
-					<img class="search-image" />
+					<img class="search-image" data-id="">
 					<div class="grid-x card-section align-middle align-center">
 						<p class="search-title"></p>
+						<!-- Add a favorites button -->
+						<button type="button" class="favorite-button">💔</button>
 					</div>
 				</div>
 			</div>
@@ -94,6 +114,7 @@
 		<script src="https://code.jquery.com/jquery-3.7.1.js"
 				integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 				crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/foundation-sites/dist/js/foundation.min.js"></script>
 		<script src="assets/js/secret.js"></script>
 		<script src="assets/js/script.js"></script>
 	</body>
