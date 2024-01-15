@@ -37,9 +37,6 @@ class safeBite {
 		// Load the cache.
 		this.apiCacheLoad();
 
-		// Add an event listener to the search button
-		this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
-
 		// Load favorites into the data storage
         this.data.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         
@@ -198,7 +195,7 @@ class safeBite {
 
 		// Loop through the
 		this.data.searchHistory.forEach(
-			recipe => this.elements.searchHistory.appendChild(historyBuild(recipe)));
+			recipe => this.elements.searchHistory.prepend(historyBuild(recipe)));
 	}
 
 	 // Method to show the favorites list
