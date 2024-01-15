@@ -39,7 +39,27 @@ class safeBite {
 
 		// Add an event listener to the search button
 		this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
+
+		// Load favorites into the data storage
+        this.data.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        
+        // Initialize event listeners
+        this.initializeEventListeners();
 	}
+
+	 // Initialize event listeners for the UI
+	initializeEventListeners() {
+        this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
+        
+        // Event listener for clearing search history
+        document.getElementById('clear-history').addEventListener('click', () => this.recipeHistoryClear());
+
+		 // Event listener for showing favorites
+		document.getElementById('show-favorites').addEventListener('click', () => this.showFavorites());
+
+		 // Event listener for clearing favorites
+		document.getElementById('clear-favorites').addEventListener('click', () => this.clearFavorites());
+    }
 
 	/***
 	 * API Functions
@@ -181,6 +201,75 @@ class safeBite {
 			recipe => this.elements.searchHistory.appendChild(historyBuild(recipe)));
 	}
 
+	 // Method to show the favorites list
+	showFavorites() {
+		const modalFavoritesList = document.getElementById('modal-favorites-list');
+		modalFavoritesList.innerHTML = ''; // Clear current list
+	
+		// Check if favorites data is correctly formed
+		console.log('Favorites Data:', this.data.favorites);
+	
+		// Populate the modal favorites list
+		this.data.favorites.forEach(favorite => {
+			const card = document.createElement('div');
+			card.classList.add('card');
+	
+			const img = document.createElement('img');
+			img.classList.add('search-image');
+			img.src = favorite.image;
+			
+		const title = document.createElement('p');
+		title.classList.add('search-title');
+		title.textContent = favorite.title;
+	
+		const favoriteButton = document.createElement('button');
+		favoriteButton.classList.add('favorite-button');
+		favoriteButton.textContent = '💔'; // Or '❤️' depending on the favorite status
+	
+		// Append the elements to the card
+		card.appendChild(img);
+		card.appendChild(title);
+		card.appendChild(favoriteButton);
+	
+		// Append the card to the modal list
+		modalFavoritesList.appendChild(card);
+	});
+	
+	// Open the modal
+	const modal = new Foundation.Reveal($('#favorites-modal'));
+	modal.open();
+	}
+
+    // Method to clear favorites
+    clearFavorites() {
+        this.data.favorites = [];
+        localStorage.setItem('favorites', JSON.stringify(this.data.favorites));
+        this.showFavorites(); 
+        console.log('Favorites cleared.');
+    }
+
+	// Toggles the favorite status of a recipe
+	toggleFavorite(recipe, favoriteButton) {
+		const isFavorite = this.data.favorites.some(fav => fav.id === recipe.id);
+		console.log(`Recipe "${recipe.title}" is currently ${isFavorite ? 'a favorite' : 'not a favorite'}. Toggling status.`);
+	
+		if (isFavorite) {
+			this.data.favorites = this.data.favorites.filter(fav => fav.id !== recipe.id);
+			favoriteButton.textContent = '❤️'; // Change to heart icon
+		} else {
+			this.data.favorites.push(recipe);
+			favoriteButton.textContent = '💔'; // Change to broken heart icon
+		}
+	
+		console.log(`Updated favorites:`, this.data.favorites);
+		localStorage.setItem('favorites', JSON.stringify(this.data.favorites));
+	}
+
+    // Checks if a recipe is a favorite
+    isFavorite(recipeId) {
+        return this.data.favorites.includes(recipeId);
+    }
+
 	recipeResultList(recipeData) {
 		// Remove all the children elements.
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
@@ -189,6 +278,9 @@ class safeBite {
 			const recipeElement = this.templates.searchResultsItem.cloneNode(true).firstElementChild;
 			const recipeImage   = recipeElement.querySelector('.search-image');
 			const recipeTitle   = recipeElement.querySelector('.search-title');
+			const favoriteButton = recipeElement.querySelector('.favorite-button');
+
+			favoriteButton.textContent = this.isFavorite(recipe.id) ? '💔' : '❤️';
 
 			// Set the recipe title
 			recipeTitle.textContent = recipe.title;
@@ -196,13 +288,26 @@ class safeBite {
 			// Add the image location and title.
 			recipeImage.src = recipe.image;
 			recipeImage.alt = recipe.title;
+			recipeImage.dataset.id = recipe.id;
 
 			// Add an event listener to the recipe list item
 			this.eventClickSave(recipeElement, 'recipeBuild', (event) => this.recipeViewOpen(event.target.dataset.id));
 
-			// Return the element
-			return recipeElement;
-		};
+			 // Check if the recipe is a favorite and update the button class
+			if (this.isFavorite(recipe.id)) {
+                favoriteButton.classList.add('is-favorite');
+            }
+
+            // Add event listener for the favorite button
+			favoriteButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent triggering any parent event
+                this.toggleFavorite(recipe.id, favoriteButton); // Pass the button to the toggle function
+                console.log(`Favorite button for recipe ID ${recipe.id} clicked.`);
+            });
+
+            // Return the element
+            return recipeElement;
+        };
 
 		// Loop through the recipe results and fill the list.
 		recipeData.results.forEach(
@@ -266,5 +371,11 @@ class safeBite {
 	}
 }
 
-// Load the site.
-const sb = new safeBite();
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Foundation
+    $(document).foundation();
+
+    // Load the site
+    const sb = new safeBite();
+});
+
