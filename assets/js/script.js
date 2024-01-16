@@ -472,7 +472,7 @@ class safeBite {
 
 	}
 
-// Open the recipe view element and populate it
+// Open the recipe view element and populate it.
 	recipeViewOpen(recipeID) {
 		// TODO: Add Recipe View Code Here
 	}
