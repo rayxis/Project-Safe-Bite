@@ -14,9 +14,10 @@ class safeBite {
 	};
 	// Elements
 	elements  = {
-		favoritesClearButton: document.querySelector('#clear-favorites'),  // Clear favorites button
-		favoritesShowButton:  document.querySelector('#show-favorites'),   // Clear favorites button
-		historyClearButton:   document.querySelector('#clear-history'),    // Clear history button
+		favoritesClearButton: document.querySelector('#clear-favorites'),  // Favorites clear button
+		favoritesList:        document.querySelector('#favorites-list'),   // Favorites list
+		favoritesShowButton:  document.querySelector('#show-favorites'),   // Favorites show button
+		historyClearButton:   document.querySelector('#clear-history'),    // History clear button
 		searchButton:         document.querySelector('#search-button'),    // Search button
 		searchHistory:        document.querySelector('#search-history'),   // Search history list
 		searchInput:          document.querySelector('#search-recipe'),    // Search recipe input
@@ -32,6 +33,7 @@ class safeBite {
 		cacheFavoritesKey:     'favorites'         // Favorites cache key
 	};
 	templates = {
+		favoritesListItem: document.querySelector('#favorites-list-item').content,
 		searchResultsItem: document.querySelector('#search-results-item').content,
 		searchHistoryItem: document.querySelector('#search-history-item').content
 	};
@@ -57,7 +59,7 @@ class safeBite {
 
 		// Event listener for clearing search history
 		// this.eventClickSave(this.elements.historyClearButton, 'clearHistory', () => this.recipeHistoryClear());
-		document.getElementById('clear-history').addEventListener('click', () => this.recipeHistoryClear());
+		// document.getElementById('clear-history').addEventListener('click', () => this.recipeHistoryClear());
 
 		// Event listener for showing favorites
 		// this.eventClickSave(this.elements.favoritesShowButton, 'showFavorites', () => this.showFavorites());
@@ -223,35 +225,40 @@ class safeBite {
 	 * Favorites Functions
 	 ***/
 
+	// Method to clear favorites
+	clearFavorites() {
+		this.data.favorites = [];
+		this.apiCacheSave('favorites');
+		this.showFavorites();
+		console.log('Favorites cleared.');
+	}
+
+	// Checks if a recipe is a favorite
+	isFavorite(recipeId) {
+		return this.data.favorites.includes(recipeId);
+	}
+
 	// Method to show the favorites list
 	showFavorites() {
-		const modalFavoritesList     = document.getElementById('modal-favorites-list');
-		modalFavoritesList.innerHTML = ''; // Clear current list
+		const modalFavoritesList = document.getElementById('modal-favorites-list');
+		// Clear the list
+		this.eventClickChildrenRemove(modalFavoritesList, 'favoriteItemClick');
 
 		// Check if favorites data is correctly formed
 		console.log('Favorites Data:', this.data.favorites);
 
 		// Populate the modal favorites list
 		this.data.favorites.forEach(favorite => {
-			const card = document.createElement('div');
-			card.classList.add('card');
+			// Clone the favorite list item template
+			const card           = this.templates.favoritesListItem.cloneNode(true).firstElementChild;
+			const favoriteButton = card.querySelector('.favorite-button');
 
-			const img = document.createElement('img');
-			img.classList.add('search-image');
-			img.src = favorite.image;
+			// Fill in the data
+			card.querySelector('.search-image').src         = favorite.image;
+			card.querySelector('.search-image').textContent = favorite.title;
 
-			const title = document.createElement('p');
-			title.classList.add('search-title');
-			title.textContent = favorite.title;
-
-			const favoriteButton = document.createElement('button');
-			favoriteButton.classList.add('favorite-button');
-			favoriteButton.textContent = '💔'; // Or '❤️' depending on the favorite status
-
-			// Append the elements to the card
-			card.appendChild(img);
-			card.appendChild(title);
-			card.appendChild(favoriteButton);
+			favoriteButton.textContent = '💔'; // Change to broken heart icon
+			this.eventClickSave(favoriteButton, 'favoriteItemClick', this.toggleFavorite.bind(this, favorite));
 
 			// Append the card to the modal list
 			modalFavoritesList.appendChild(card);
@@ -262,34 +269,20 @@ class safeBite {
 		modal.open();
 	}
 
-	// Method to clear favorites
-	clearFavorites() {
-		this.data.favorites = [];
-		this.apiCacheSave('favorites');
-		this.showFavorites();
-		console.log('Favorites cleared.');
-	}
-
 	// Toggles the favorite status of a recipe
-	toggleFavorite(recipe, favoriteButton) {
-		const isFavorite = this.data.favorites.some(fav => fav.id === recipe.id);
-		console.log(`Recipe "${recipe.title}" is currently ${isFavorite ? 'a favorite' : 'not a favorite'}. Toggling status.`);
+	toggleFavorite(recipe, event) {
+		console.log(`Recipe "${recipe.title}" is currently ${this.isFavorite(recipe) ? 'a favorite' : 'not a favorite'}. Toggling status.`);
 
-		if (isFavorite) {
-			this.data.favorites        = this.data.favorites.filter(fav => fav.id !== recipe.id);
-			favoriteButton.textContent = '❤️'; // Change to heart icon
+		if (this.isFavorite(recipe)) {
+			this.data.favorites      = this.data.favorites.filter(fav => fav.id !== recipe.id);
+			event.target.textContent = '💔'; // Change to broken heart icon
 		} else {
 			this.data.favorites.push(recipe);
-			favoriteButton.textContent = '💔'; // Change to broken heart icon
+			event.target.textContent = '❤️'; // Change to heart icon
 		}
 
 		console.log(`Updated favorites:`, this.data.favorites);
 		this.apiCacheSave('favorites');
-	}
-
-	// Checks if a recipe is a favorite
-	isFavorite(recipeId) {
-		return this.data.favorites.includes(recipeId);
 	}
 
 	async nutritionFetch(foodData) {
@@ -349,8 +342,7 @@ class safeBite {
 	// Fill the
 	recipeHistoryList() {
 		// Empty the list and remove the event listeners.
-		this
-			.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
+		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
 
 		// Function to build search history list items.
 		const
@@ -384,8 +376,6 @@ class safeBite {
 			const recipeTitle    = recipeElement.querySelector('.search-title');
 			const favoriteButton = recipeElement.querySelector('.favorite-button');
 
-			favoriteButton.textContent = this.isFavorite(recipe.id) ? '💔' : '❤️';
-
 			// Set the recipe title
 			recipeTitle.textContent = recipe.title;
 
@@ -398,15 +388,18 @@ class safeBite {
 			this.eventClickSave(recipeElement, 'recipeBuild', (event) => this.recipeViewOpen(event.target.dataset.id));
 
 			// Check if the recipe is a favorite and update the button class
-			if (this.isFavorite(recipe.id))
-				favoriteButton.classList.add('is-favorite');
+			if (this.isFavorite(recipe)) {
+				favoriteButton.textContent = this.isFavorite(recipe.id) ? '💔' : '❤️';
+				favoriteButton.classList.toggle('is-favorite', this.isFavorite(recipe.id));
+			}
 
 			// Add event listener for the favorite button
-			favoriteButton.addEventListener('click', (event) => {
-				event.stopPropagation(); // Prevent triggering any parent event
-				this.toggleFavorite(recipe.id, favoriteButton); // Pass the button to the toggle function
-				console.log(`Favorite button for recipe ID ${recipe.id} clicked.`);
-			});
+			this.eventClickSave(favoriteButton, 'favoriteItemClick', this.toggleFavorite.bind(this, recipe));
+			// favoriteButton.addEventListener('click', (event) => {
+			// 	event.stopPropagation(); // Prevent triggering any parent event
+			// 	this.toggleFavorite(recipe.id, favoriteButton); // Pass the button to the toggle function
+			// 	console.log(`Favorite button for recipe ID ${recipe.id} clicked.`);
+			// });
 
 			// Return the element
 			return recipeElement;
