@@ -82,7 +82,7 @@ class safeBite {
 				case 'searchHistory':
 					// Pull the searchHistory from localStorage and parse it into an array. If this is unsuccessful,
 					// use the default value (or any other value) in searchHistory.
-					this.data.searchHistory = JSON.parse(localStorage.getItem(this.settings.cacheKey)) ?? this.data.searchHistory;
+					this.data.searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 					this.recipeHistoryList();
 					break;
 				default:
@@ -110,7 +110,7 @@ class safeBite {
 				case 'searchHistory':
 					// Cache search history
 					cacheKey = this.settings.cacheSearchHistoryKey;
-					apiData  = JSON.stringify(this.data.favorites);
+					apiData  = JSON.stringify(this.data.searchHistory);
 					break;
 				// An invalid type was specified.
 				default:
@@ -383,7 +383,7 @@ class safeBite {
 
 				// Save the search history
 				this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
-				this.apiCacheSave();
+				this.apiCacheSave('searchHistory');
 				this.recipeHistoryList();
 
 				// Build the recipe result list.

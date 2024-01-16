@@ -80,7 +80,7 @@
 #search-button {
   padding: 8px;
   border: none;
-  background-color: #0b13e4;
+  background: #0b13e4;
   color: #fff;
   border-radius: 4px;
   cursor: pointer;
@@ -169,54 +169,39 @@ screen and (min-width: 40em) {
   }
 }
 
-/* Footer */
-.footer {
-  background: rgb(128, 128, 128, 60%);
-  text-align: center;
-  padding: 1vh 0;
-}
-
 /* Modal Customization */
 #favorites-modal .modal-header {
   padding: 1rem;
-  border-bottom: 1px solid #FFDB2B;
-  background: #e64747;
   /* Header color to match the site's header */
-  color: white;
+  background: #e64747;
   /* Text color for the header */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  color: white;
 }
 
 #favorites-modal .modal-content {
   padding: 1rem;
   background: #fefefe;
-  max-height: 60vh;
   /* Set a max height for scrollable content */
+  max-height: 60vh;
+   /* Enable scrolling for overflow */
   overflow-y: auto;
-  /* Enable scrolling for overflow */
 }
 
 #favorites-modal .modal-footer {
   padding: 1rem;
-  background: #e64747;
-  /* Footer color to match the site's header */
   text-align: right;
+  /* Footer color to match the site's header */
+  background: #e64747;
 }
 
 /* Ensure the close button matches your site's theme */
-#favorites-modal .close-button {
-  font-size: 2rem;
-  color: #FFDB2B;
+.close-button {
   /* Adjust the color to match your site's theme */
-  background: none;
-  border: none;
+  color: #FFDB2B;
 }
 
 /* Styling for the list inside the modal to match your site's design */
 #modal-favorites-list {
-  list-style-type: none;
   padding-left: 0;
 }
 
@@ -231,13 +216,8 @@ screen and (min-width: 40em) {
 
 /* Button styling inside the modal footer to match your site */
 #favorites-modal .button {
-  border-radius: 10px;
-  padding: 0.5em 0.5em;
-  margin: 0;
-  background-color: #8fb935;
   /* Background color to match the site's card section */
-  color: white;
-  /* Text color for buttons */
+  background: #8fb935;
 }
 
 /* Hover effects for the modal buttons */
@@ -246,21 +226,10 @@ screen and (min-width: 40em) {
 }
 
 /* Responsive adjustments for the modal */
-@media screen and (max-width: 425px) {
-  #favorites-modal .modal-header h2 {
-    font-size: 1.2rem;
-  }
-
-  #favorites-modal .close-button {
-    font-size: 1.5rem;/
-  }
-}
-
 #modal-favorites-list .favorite-button {
   font-size: 1.5rem;
   margin-left: 0.5rem;
 }
-
 
 #modal-favorites-list .favorite-button.is-favorite {
   color: #cc0000;
@@ -268,7 +237,15 @@ screen and (min-width: 40em) {
 
 .reveal {
   min-width: 300px;
-  max-width: 80%;
   max-height: 80%;
   overflow: auto;
+  border: none;
+  background: transparent;
+}
+
+/* Footer */
+.footer {
+  background: rgb(128, 128, 128, 60%);
+  text-align: center;
+  padding: 1vh 0;
 }
