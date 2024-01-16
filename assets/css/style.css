@@ -2,134 +2,273 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat');
 
 /* Universal style */
-* { 
+* {
   font-family: 'Montserrat', sans-serif !important;
 }
 
 /* Resusable classes */
 .border-bottom {
-    border-bottom:#FFDB2B 0.3rem solid;
+  border-bottom: #FFDB2B 0.3rem solid;
+}
+
+.border-top {
+  border-top: #FFDB2B 0.3rem solid;
+}
+
+.button {
+  border-radius: 10px;
+  padding: 0.5em 0.5em;
+  margin: 0;
+}
+
+.pl-3rem {
+  padding-left: 0.3rem;
+}
+
+.ml-0 {
+  margin-left: 0;
+}
+
+.mt-1vh {
+  margin-top: 1vh;
+}
+
+.mb-1vh {
+  margin-bottom: 1vh;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mt-2rem {
+  margin-top: 2rem;
+}
+
+/* Header */
+.title-bar {
+  background: #e64747 !important;
+  justify-content: center;
+  gap: 4vw;
+}
+
+.title-bar-title {
+  font-style: italic;
+}
+
+
+@media screen and (max-width: 425px) {
+  .title-bar img {
+    height: 40px;
   }
-  
-  .border-top {
-    border-top:#FFDB2B 0.3rem solid;
-  }
-  
-  .button { 
-    border-radius: 10px;
-    padding: 0.5em 0.5em;
-    margin: 0;
-  }
-  
-  .pl-3rem {
-    padding-left: 0.3rem;
-  }
-  
-  .ml-0 {
-    margin-left: 0;
-  }
-  
-  .mt-1vh {
-    margin-top: 1vh;
-  }
-  
-  .mb-1vh {
-    margin-bottom: 1vh;
-  }
-  
-  .mb-0 {
-    margin-bottom: 0;
-  }
-  
-  .mt-2rem {
-    margin-top: 2rem;
-  }
-  
-  /* Header */
-  .title-bar {
-    background: #e64747 !important;
-    justify-content: center;
-    gap: 4vw;
-  }
-  
-  .title-bar-title {
-    font-style: italic;
-  }
-  
-  
-  @media screen and (max-width: 425px) {
-    .title-bar img {
-      height: 40px;
-    }
-  }
+}
 
 /* Main */
 /* Search Bar */
 #search-form {
-    display: flex;
-    align-items: center;
-  }
-  
-  #search-recipe {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 8px;
-  }
-  
-  #search-button {
-    padding: 8px;
-    border: none;
-    background-color: #0b13e4;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* #search-history {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: none;
-  } */
-  
-  /* Optional styles for search history items */
-  #search-history li {
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  /* Show search history when search input is focused */
-  #search-recipe:focus + #search-history {
-    display: block;
-  }
+  display: flex;
+  align-items: center;
+}
+
+#search-recipe {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+#search-button {
+  padding: 8px;
+  border: none;
+  background-color: #0b13e4;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Show search history when search input is focused */
+#search-recipe:focus {
+  display: block;
+}
 
 /* Search Results */
 .card {
-    border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.card-section {
+  background: #8fb935;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card .search-title:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Favorites button*/
+.favorite-button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.favorite-button:hover {
+  opacity: 0.7;
+}
+
+.favorite-button.is-favorite {
+  color: #0b13e4;
+}
+
+/* Responsive adjustments for the favorite button */
+@media screen and (max-width: 425px) {
+  .favorite-button {
+    font-size: 18px;
+    /* Smaller size on mobile devices */
   }
-  
-  .card-section {
-    background: #8fb935;
-  }
+}
 
 /* Aside */
 /* Search History */
 #search-history {
-    background: rgb(128, 128, 128, 20%);
-    border-bottom-left-radius: 15px 15px;
-    border-bottom-right-radius: 15px 15px;
+  background: rgb(128, 128, 128, 20%);
+  border-bottom-left-radius: 15px 15px;
+  border-bottom-right-radius: 15px 15px;
+}
+
+#search-history .button {
+  display: flex;
+  border-radius: 0;
+  padding: 0.85em 1em;
+}
+
+#search-history li:not(:last-of-type) {
+  border-bottom: 1px solid #808080;
+}
+
+@media print,
+screen and (min-width: 40em) {
+  h3 {
+    font-size: 1.4rem;
   }
-  
-  @media screen and (max-width: 425px) {
-    aside {
-      border-top:#FFDB2B 0.3rem dashed;
-    }
+}
+
+@media screen and (max-width: 425px) {
+  aside {
+    border-top: #FFDB2B 0.3rem dashed;
   }
-  
-  /* Footer */
-  .footer {
-    background: rgb(128, 128, 128, 60%);
-    text-align: center;
-    padding: 1vh 0;
+}
+
+/* Footer */
+.footer {
+  background: rgb(128, 128, 128, 60%);
+  text-align: center;
+  padding: 1vh 0;
+}
+
+/* Modal Customization */
+#favorites-modal .modal-header {
+  padding: 1rem;
+  border-bottom: 1px solid #FFDB2B;
+  background: #e64747;
+  /* Header color to match the site's header */
+  color: white;
+  /* Text color for the header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#favorites-modal .modal-content {
+  padding: 1rem;
+  background: #fefefe;
+  max-height: 60vh;
+  /* Set a max height for scrollable content */
+  overflow-y: auto;
+  /* Enable scrolling for overflow */
+}
+
+#favorites-modal .modal-footer {
+  padding: 1rem;
+  background: #e64747;
+  /* Footer color to match the site's header */
+  text-align: right;
+}
+
+/* Ensure the close button matches your site's theme */
+#favorites-modal .close-button {
+  font-size: 2rem;
+  color: #FFDB2B;
+  /* Adjust the color to match your site's theme */
+  background: none;
+  border: none;
+}
+
+/* Styling for the list inside the modal to match your site's design */
+#modal-favorites-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#modal-favorites-list li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  /* White background for each list item */
+  cursor: pointer;
+  /* Indicates an actionable item */
+}
+
+/* Button styling inside the modal footer to match your site */
+#favorites-modal .button {
+  border-radius: 10px;
+  padding: 0.5em 0.5em;
+  margin: 0;
+  background-color: #8fb935;
+  /* Background color to match the site's card section */
+  color: white;
+  /* Text color for buttons */
+}
+
+/* Hover effects for the modal buttons */
+#favorites-modal .button:hover {
+  opacity: 0.8;
+}
+
+/* Responsive adjustments for the modal */
+@media screen and (max-width: 425px) {
+  #favorites-modal .modal-header h2 {
+    font-size: 1.2rem;
   }
+
+  #favorites-modal .close-button {
+    font-size: 1.5rem;/
+  }
+}
+
+#modal-favorites-list .favorite-button {
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+
+#modal-favorites-list .favorite-button.is-favorite {
+  color: #cc0000;
+}
+
+.reveal {
+  min-width: 300px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+}

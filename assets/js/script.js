@@ -1,4 +1,4 @@
-class TakeABite {
+class safeBite {
 	// API URLs
 	apis      = {
 		spoonacular: new URL('https://api.spoonacular.com/recipes/complexSearch'),
@@ -12,7 +12,6 @@ class TakeABite {
 	};
 	// Elements
 	elements  = {
-		clearButton:   document.querySelector('#clear-history'),    // Search history clear button.
 		searchButton:  document.querySelector('#search-button'),    // Search button
 		searchHistory: document.querySelector('#search-history'),   // Search history list?
 		searchInput:   document.querySelector('#search-recipe'),    // Search recipe input
@@ -268,4 +267,4 @@ class TakeABite {
 }
 
 // Load the site.
-const tab = new TakeABite();
+const sb = new safeBite();
