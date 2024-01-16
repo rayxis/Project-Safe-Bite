@@ -7,15 +7,19 @@ class safeBite {
 	// Data Storage
 	data      = {
 		apiKeys:       {},  // API keys. Filled by constructor.
+		favorites:     [],  // Favorite's array
 		functions:     [],  // Events functions list
 		searchHistory: []   // Search history
 	};
 	// Elements
 	elements  = {
-		searchButton:  document.querySelector('#search-button'),    // Search button
-		searchHistory: document.querySelector('#search-history'),   // Search history list?
-		searchInput:   document.querySelector('#search-recipe'),    // Search recipe input
-		searchResults: document.querySelector('#search-results')    // Search results list
+		favoritesClearButton: document.querySelector('#clear-favorites'),  // Clear favorites button
+		favoritesShowButton:  document.querySelector('#show-favorites'),   // Clear favorites button
+		historyClearButton:   document.querySelector('#clear-history'),    // Clear history button
+		searchButton:         document.querySelector('#search-button'),    // Search button
+		searchHistory:        document.querySelector('#search-history'),   // Search history list
+		searchInput:          document.querySelector('#search-recipe'),    // Search recipe input
+		searchResults:        document.querySelector('#search-results')    // Search results list
 	};
 	// Errors
 	errors    = {
@@ -23,7 +27,8 @@ class safeBite {
 	};
 	// Settings
 	settings  = {
-		cacheKey: 'searchHistory'    // Cache Location
+		cacheSearchHistoryKey: 'searchHistory',    // Search history cache key
+		cacheFavoritesKey:     'favorites'         // Favorites cache key
 	};
 	templates = {
 		searchResultsItem: document.querySelector('#search-results-item').content,
@@ -35,35 +40,91 @@ class safeBite {
 		this.data.apiKeys = apiKeys;
 
 		// Load the cache.
-		this.apiCacheLoad();
+		this.apiCacheLoad('searchHistory');
+		this.apiCacheLoad('favorites');
 
-		// Add an event listener to the search button
-		this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
+		// Initialize event listeners
+		this.initializeEventListeners();
+
+		// Initialize Foundation
+		$(document).foundation();
 	}
 
-	/***
+	// Initialize event listeners for the UI
+	initializeEventListeners() {
+		this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
+
+		// Event listener for clearing search history
+		// this.eventClickSave(this.elements.historyClearButton, 'clearHistory', () => this.recipeHistoryClear());
+		document.getElementById('clear-history').addEventListener('click', () => this.recipeHistoryClear());
+
+		// Event listener for showing favorites
+		// this.eventClickSave(this.elements.favoritesShowButton, 'showFavorites', () => this.showFavorites());
+		document.getElementById('show-favorites').addEventListener('click', () => this.showFavorites());
+
+		// Event listener for clearing favorites
+		// this.eventClickSave(this.elements.favoritesClearButton, 'clearFavorites', () => this.clearFavorites());
+		document.getElementById('clear-favorites').addEventListener('click', () => this.clearFavorites());
+	}
+
+  /***
 	 * API Functions
 	 ***/
 
 	// Load the search history cache
-	apiCacheLoad() {
-		// Pull the searchHistory from localStorage and parse it into an array. If this is unsuccessful, use the
-		// default value (or any other value) in searchHistory.
-		this.data.searchHistory = JSON.parse(localStorage.getItem(this.settings.cacheKey)) ?? this.data.searchHistory;
-		this.recipeHistoryList();
+	apiCacheLoad(type) {
+		try {
+			switch (type) {
+				case 'favorites':
+					// Load favorites into the data storage
+					this.data.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+					break;
+				case 'searchHistory':
+					// Pull the searchHistory from localStorage and parse it into an array. If this is unsuccessful,
+					// use the default value (or any other value) in searchHistory.
+					this.data.searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+					this.recipeHistoryList();
+					break;
+				default:
+					// If trying to load a cache that isn't defined, throw an error.
+					throw new Error(`Invalid data cache type used: "$type"`);
+			}
+		} catch (error) {
+			console.log('apiCacheSave failure:', error);
+			return false;
+		}
 	}
 
 	// Cache the search history
-	apiCacheSave() {
+	apiCacheSave(type) {
+		let apiData, cacheKey;
 		try {
-			// Turn the search history array into a string for storage
-			const apiData = JSON.stringify(this.data.searchHistory);
+			if (!this.data[type]) throw new Error(`Data "${type}" does not exist.`);
 
-			// If the search history was successfully converted to an array, save it and check the integrity.
-			if (apiData) {
-				localStorage.setItem(this.settings.cacheKey, apiData);
-				if (apiData === localStorage.getItem(this.settings.cacheKey)) return true;
+			switch (type) {
+				case 'favorites':
+					// Cache favorites
+					cacheKey = this.settings.cacheFavoritesKey;
+					apiData  = JSON.stringify(this.data.favorites);
+					break;
+				case 'searchHistory':
+					// Cache search history
+					cacheKey = this.settings.cacheSearchHistoryKey;
+					apiData  = JSON.stringify(this.data.searchHistory);
+					break;
+				// An invalid type was specified.
+				default:
+					throw new Error(`Invalid data cache type used: "${type}"`);
 			}
+			// Turn the array data into a string for storage
+			apiData = JSON.stringify(this.data[type]);
+
+			// If the data was successfully converted to an array, save it and check the integrity.
+			if (apiData) {
+				localStorage.setItem(cacheKey, apiData);
+				if (apiData === localStorage.getItem(cacheKey)) return true;
+			}
+
 		} catch (error) {
 			// If JSON conversion was unsuccessful, or the data did not save properly, something broke.
 			console.log('apiCacheSave failure:', error);
@@ -162,7 +223,7 @@ class safeBite {
 
 		// Function to build search history list items.
 		const historyBuild = search => {
-			const searchElement = this.templates.searchHistoryItem.cloneNode(true).firstElementChild;
+			const searchElement       = this.templates.searchHistoryItem.cloneNode(true).firstElementChild;
 			searchElement.textContent = search.searchQuery;
 
 			// Add an event listener to the recipe list item
@@ -181,9 +242,73 @@ class safeBite {
 			recipe => this.elements.searchHistory.appendChild(historyBuild(recipe)));
 	}
 
-	// Retrieve recipe information
-	recipeInfoFetch() {
-		// TODO: Pull recipe information
+	// Method to show the favorites list
+	showFavorites() {
+		const modalFavoritesList     = document.getElementById('modal-favorites-list');
+		modalFavoritesList.innerHTML = ''; // Clear current list
+
+		// Check if favorites data is correctly formed
+		console.log('Favorites Data:', this.data.favorites);
+
+		// Populate the modal favorites list
+		this.data.favorites.forEach(favorite => {
+			const card = document.createElement('div');
+			card.classList.add('card');
+
+			const img = document.createElement('img');
+			img.classList.add('search-image');
+			img.src = favorite.image;
+
+			const title = document.createElement('p');
+			title.classList.add('search-title');
+			title.textContent = favorite.title;
+
+			const favoriteButton = document.createElement('button');
+			favoriteButton.classList.add('favorite-button');
+			favoriteButton.textContent = '💔'; // Or '❤️' depending on the favorite status
+
+			// Append the elements to the card
+			card.appendChild(img);
+			card.appendChild(title);
+			card.appendChild(favoriteButton);
+
+			// Append the card to the modal list
+			modalFavoritesList.appendChild(card);
+		});
+
+		// Open the modal
+		const modal = new Foundation.Reveal($('#favorites-modal'));
+		modal.open();
+	}
+
+	// Method to clear favorites
+	clearFavorites() {
+		this.data.favorites = [];
+		this.apiCacheSave('favorites');
+		this.showFavorites();
+		console.log('Favorites cleared.');
+	}
+
+	// Toggles the favorite status of a recipe
+	toggleFavorite(recipe, favoriteButton) {
+		const isFavorite = this.data.favorites.some(fav => fav.id === recipe.id);
+		console.log(`Recipe "${recipe.title}" is currently ${isFavorite ? 'a favorite' : 'not a favorite'}. Toggling status.`);
+
+		if (isFavorite) {
+			this.data.favorites        = this.data.favorites.filter(fav => fav.id !== recipe.id);
+			favoriteButton.textContent = '❤️'; // Change to heart icon
+		} else {
+			this.data.favorites.push(recipe);
+			favoriteButton.textContent = '💔'; // Change to broken heart icon
+		}
+
+		console.log(`Updated favorites:`, this.data.favorites);
+		this.apiCacheSave('favorites');
+	}
+
+	// Checks if a recipe is a favorite
+	isFavorite(recipeId) {
+		return this.data.favorites.includes(recipeId);
 	}
 
 	recipeResultList(recipeData) {
@@ -191,19 +316,34 @@ class safeBite {
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
 
 		const recipeBuild = recipe => {
-			const recipeElement = this.templates.searchResultsItem.cloneNode(true).firstElementChild;
-			const recipeImage   = recipeElement.querySelector('.search-image');
-			const recipeTitle   = recipeElement.querySelector('.search-title');
+			const recipeElement  = this.templates.searchResultsItem.cloneNode(true).firstElementChild;
+			const recipeImage    = recipeElement.querySelector('.search-image');
+			const recipeTitle    = recipeElement.querySelector('.search-title');
+			const favoriteButton = recipeElement.querySelector('.favorite-button');
+
+			favoriteButton.textContent = this.isFavorite(recipe.id) ? '💔' : '❤️';
 
 			// Set the recipe title
 			recipeTitle.textContent = recipe.title;
 
 			// Add the image location and title.
-			recipeImage.src = recipe.image;
-			recipeImage.alt = recipe.title;
+			recipeImage.src        = recipe.image;
+			recipeImage.alt        = recipe.title;
+			recipeImage.dataset.id = recipe.id;
 
 			// Add an event listener to the recipe list item
 			this.eventClickSave(recipeElement, 'recipeBuild', (event) => this.recipeViewOpen(event.target.dataset.id));
+
+			// Check if the recipe is a favorite and update the button class
+			if (this.isFavorite(recipe.id))
+				favoriteButton.classList.add('is-favorite');
+
+			// Add event listener for the favorite button
+			favoriteButton.addEventListener('click', (event) => {
+				event.stopPropagation(); // Prevent triggering any parent event
+				this.toggleFavorite(recipe.id, favoriteButton); // Pass the button to the toggle function
+				console.log(`Favorite button for recipe ID ${recipe.id} clicked.`);
+			});
 
 			// Return the element
 			return recipeElement;
@@ -243,7 +383,7 @@ class safeBite {
 
 				// Save the search history
 				this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
-				this.apiCacheSave();
+				this.apiCacheSave('searchHistory');
 				this.recipeHistoryList();
 
 				// Build the recipe result list.
@@ -270,6 +410,7 @@ class safeBite {
 		// TODO: Add Recipe View Code Here
 	}
 }
+
 
 // Load the site.
 const sb = new safeBite();

@@ -29,8 +29,7 @@
 				</form>
 				<!-- Recipe Search Results -->
 				<div class="grid-container mt-2rem">
-					<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0"
-						id="search-results">
+					<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0" id="search-results">
 						<!-- Search results will be populated here by JavaScript -->
 					</ul>
 				</div>
@@ -46,15 +45,15 @@
 							onclick="tab.recipeHistoryClear();"></button>
 				</div>
 				<div>
-					<ul class="no-bullet border-top ml-0 mt-1vh" id="search-history">
+					<ul class="no-bullet border-top mt-1vh" id="search-history">
 						<!-- Search history will be populated here by JavaScript-->
 					</ul>
 				</div>
 
 				<!-- Favorites Section -->
-				<div class="favorites-section border-top mt-1vh">
+				<div class="favorites-section mt-1vh">
 					<h3>Favorites:</h3>
-					<ul id="favorites-list" class="no-bullet pl-3rem">
+					<ul id="favorites-list border-top mt-1vh" class="no-bullet pl-3rem">
 						<!-- Favorites will be populated here by JavaScript -->
 					</ul>
 					<div class="grid-x align-middle align-justify">
@@ -62,26 +61,25 @@
 						<button type="button" class="button alert" id="clear-favorites">Clear Favorites</button>
 					</div>
 				</div>
-
 			</aside>
 
-<!-- Favorites Modal -->
-<div class="reveal" id="favorites-modal" data-reveal>
-    <div class="modal-header">
-        <h2>Favorites</h2>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-content">
-        <ul id="modal-favorites-list" class="no-bullet">
-            <!-- Favorite items will be listed here in the modal -->
-        </ul>
-    </div>
-    <div class="modal-footer grid-x align-right">
-        <button class="button secondary small" data-close>Close</button>
-    </div>
-</div>
+		<!-- Favorites Modal -->
+		<div class="reveal" id="favorites-modal" data-reveal>
+			<div class="modal-header">
+				<h2>Favorites</h2>
+				<button class="close-button" data-close aria-label="Close modal" type="button">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-content">
+				<ul id="modal-favorites-list" class="no-bullet">
+					<!-- Favorite items will be listed here in the modal -->
+				</ul>
+			</div>
+			<div class="modal-footer grid-x align-right">
+				<button class="button secondary small" data-close>Close</button>
+			</div>
+		</div>
 		</div>
 
 		<!-- Template for recipe search result card -->
@@ -114,7 +112,7 @@
 		<script src="https://code.jquery.com/jquery-3.7.1.js"
 				integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 				crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/foundation-sites/dist/js/foundation.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/foundation-sites/dist/js/foundation.min.js"></script>
 		<script src="assets/js/secret.js"></script>
 		<script src="assets/js/script.js"></script>
 	</body>
