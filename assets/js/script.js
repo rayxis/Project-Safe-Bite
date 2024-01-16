@@ -1,8 +1,9 @@
 class safeBite {
 	// API URLs
 	apis      = {
-		spoonacular: new URL('https://api.spoonacular.com/recipes/complexSearch'),
-		unsplash:    new URL('https://api.unsplash.com/search/photos')
+		apiNinjas:   new URL('https://api.api-ninjas.com/v1/quotes'),
+		edamam:      new URL('https://api.edamam.com/api/nutrition-data'),
+		spoonacular: new URL('https://api.spoonacular.com/recipes/complexSearch')
 	};
 	// Data Storage
 	data      = {
@@ -132,17 +133,27 @@ class safeBite {
 		return false;
 	}
 
-	// Handler for API fetch requests, with optional callback function for handling asynchronous requests.
-	async apiFetchJSON(url, callback = undefined) {
+	// Handler for API fetch requests, with optional header and callback function for handling asynchronous requests.
+	async apiFetchJSON(apiData) {
+		// Default fetch data, then append anything that was specified.
+		const fetchObject = {
+			url:      undefined,
+			callback: undefined,
+			...apiData,
+			headers: {headers: apiData.headers ?? {}}
+		};
+
 		try {
-			//  Fetch data from the specified URL, and then return it.
-			const response = await fetch(url);
+			// Fetch data from the specified URL, and then return it.
+			const response = await fetch(fetchObject.url, fetchObject.headers);
 
 			// If the response is not okay, throw an error.
 			if (!response.ok) throw new Error('networkError');
 
 			// If a callback was provided, return the value from that, otherwise return the parsed response.
-			else return callback ? response.json().then(response => callback(response)) : response.json();
+			else return fetchObject.callback
+			            ? response.json().then(response => fetchObject.callback(response))
+			            : response.json();
 		} catch (error) {
 			console.log('apiFetchJSON failure:', error);
 		}
@@ -208,39 +219,9 @@ class safeBite {
 		return this.data.functions[funcName];
 	}
 
-	// Clears the recipe history from localStorage, and the array.
-	recipeHistoryClear() {
-		// Clear the searchHistory array, save the cache and clear the history list.
-		this.data.searchHistory = [];
-		this.apiCacheSave();
-		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
-	}
-
-	// Fill the
-	recipeHistoryList() {
-		// Empty the list and remove the event listeners.
-		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
-
-		// Function to build search history list items.
-		const historyBuild = search => {
-			const searchElement       = this.templates.searchHistoryItem.cloneNode(true).firstElementChild;
-			searchElement.textContent = search.searchQuery;
-
-			// Add an event listener to the recipe list item
-			this.eventClickSave(searchElement, 'historyBuild', (event) => {
-				// Set the search box with the search text, and then click the search button.
-				this.elements.searchInput.value = event.target.textContent;
-				this.elements.searchButton.click();
-			});
-
-			// Return the element
-			return searchElement;
-		};
-
-		// Loop through the
-		this.data.searchHistory.forEach(
-			recipe => this.elements.searchHistory.prepend(historyBuild(recipe)));
-	}
+	/***
+	 * Favorites Functions
+	 ***/
 
 	// Method to show the favorites list
 	showFavorites() {
@@ -311,6 +292,88 @@ class safeBite {
 		return this.data.favorites.includes(recipeId);
 	}
 
+	async nutritionFetch(foodData) {
+		// Get the API URL for Edamam, fill the API key data and search query.
+		const url  = this.apis.edamam;
+		url.search = new URLSearchParams({
+			                                 ...this.data.apiKeys.edamam,
+			                                 ingr: foodData
+		                                 });
+		// Fetch the JSON
+		return this.apiFetchJSON({
+			                         url:      this.apis.spoonacular,
+			                         callback: recipeData => {
+				                         // Save the search history
+				                         this.data.searchHistory.push({searchQuery: foodData, ...recipeData});
+				                         this.apiCacheSave('searchHistory');
+				                         this.recipeHistoryList();
+			                         }
+		                         });
+	}
+
+	/***
+	 * Quote Function
+	 ***/
+
+	// Fetch a random food quote.
+	quoteFetch() {
+		const url = this.apis.apiNinjas;
+
+		// Set search category to food.
+		url.searchParams.set('category', 'food');
+
+		// Fetch a quote from API Ninjas.
+		this.apiFetchJSON({
+			                  url:      url,
+			                  headers:  {'X-Api-Key': this.data.apiKeys.apiNinjas},
+			                  callback: quote => console.log(quote)
+			                  // this.elements.someElement.textContent = `"${quote[0].quote}" - ${quote[0].author}`;
+			                  // TODO: Remove console.log() and uncomment the string, replace 'someElement' with
+			                  //  whatever element. Alternatively, two separate elements (quote and author)
+			                  //  could be filled, and adjusted with CSS.
+		                  });
+	}
+
+	/***
+	 * Recipe Functions
+	 ***/
+
+	// Clears the recipe history from localStorage, and the array.
+	recipeHistoryClear() {
+		// Clear the searchHistory array, save the cache and clear the history list.
+		this.data.searchHistory = [];
+		this.apiCacheSave();
+		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
+	}
+
+	// Fill the
+	recipeHistoryList() {
+		// Empty the list and remove the event listeners.
+		this
+			.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
+
+		// Function to build search history list items.
+		const
+			historyBuild = search => {
+				const searchElement       = this.templates.searchHistoryItem.cloneNode(true).firstElementChild;
+				searchElement.textContent = search.searchQuery;
+
+				// Add an event listener to the recipe list item
+				this.eventClickSave(searchElement, 'historyBuild', (event) => {
+					// Set the search box with the search text, and then click the search button.
+					this.elements.searchInput.value = event.target.textContent;
+					this.elements.searchButton.click();
+				});
+
+				// Return the element
+				return searchElement;
+			};
+
+		// Loop through the
+		this.data.searchHistory.forEach(
+			recipe => this.elements.searchHistory.prepend(historyBuild(recipe)));
+	}
+
 	recipeResultList(recipeData) {
 		// Remove all the children elements.
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
@@ -378,19 +441,23 @@ class safeBite {
 			}
 
 			// Fetch the JSON
-			else this.apiFetchJSON(this.apis.spoonacular, recipeData => {
-				console.log(recipeData);
+			else this.apiFetchJSON({
+				                       url:      this.apis.spoonacular,
+				                       callback: recipeData => {
+					                       console.log(recipeData);
 
-				// Save the search history
-				this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
-				this.apiCacheSave('searchHistory');
-				this.recipeHistoryList();
+					                       // Save the search history
+					                       this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
+					                       this.apiCacheSave('searchHistory');
+					                       this.recipeHistoryList();
 
-				// Build the recipe result list.
-				this.recipeResultList(recipeData);
+					                       // Build the recipe result list.
+					                       this.recipeResultList(recipeData);
+				                       }
+			                       });
 
-				// TODO: Do secondary API action here
-			});
+			// Random food quote
+			this.quoteFetch();
 
 		} catch (error) {
 			// Log any errors.
@@ -399,13 +466,13 @@ class safeBite {
 		}
 	}
 
-	// Close the recipe view element
+// Close the recipe view element
 	recipeViewClose() {
 		// TODO: Add Recipe View Close Code Here
 
 	}
 
-	// Open the recipe view element and populate it
+// Open the recipe view element and populate it.
 	recipeViewOpen(recipeID) {
 		// TODO: Add Recipe View Code Here
 	}
