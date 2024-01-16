@@ -181,6 +181,11 @@ class safeBite {
 			recipe => this.elements.searchHistory.appendChild(historyBuild(recipe)));
 	}
 
+	// Retrieve recipe information
+	recipeInfoFetch() {
+		// TODO: Pull recipe information
+	}
+
 	recipeResultList(recipeData) {
 		// Remove all the children elements.
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
