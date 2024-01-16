@@ -1,15 +1,16 @@
 class safeBite {
 	// API URLs
 	apis      = {
-		apiNinjas:   new URL('https://api.api-ninjas.com/v1/quotes'),
-		edamam:      new URL('https://api.edamam.com/api/nutrition-data'),
-		spoonacular: new URL('https://api.spoonacular.com/recipes/complexSearch')
+		apiNinjas:    new URL('https://api.api-ninjas.com/v1/quotes'),
+		recipeInfo:   new URL('https://api.spoonacular.com/recipes'),
+		recipeSearch: new URL('https://api.spoonacular.com/recipes/complexSearch')
 	};
 	// Data Storage
 	data      = {
 		apiKeys:       {},  // API keys. Filled by constructor.
 		favorites:     [],  // Favorite's array
 		functions:     [],  // Events functions list
+		recipes:       [],  // Array of recipes
 		searchHistory: []   // Search history
 	};
 	// Elements
@@ -285,25 +286,6 @@ class safeBite {
 		this.apiCacheSave('favorites');
 	}
 
-	async nutritionFetch(foodData) {
-		// Get the API URL for Edamam, fill the API key data and search query.
-		const url  = this.apis.edamam;
-		url.search = new URLSearchParams({
-			                                 ...this.data.apiKeys.edamam,
-			                                 ingr: foodData
-		                                 });
-		// Fetch the JSON
-		return this.apiFetchJSON({
-			                         url:      this.apis.spoonacular,
-			                         callback: recipeData => {
-				                         // Save the search history
-				                         this.data.searchHistory.push({searchQuery: foodData, ...recipeData});
-				                         this.apiCacheSave('searchHistory');
-				                         this.recipeHistoryList();
-			                         }
-		                         });
-	}
-
 	/***
 	 * Quote Function
 	 ***/
@@ -385,7 +367,7 @@ class safeBite {
 			recipeImage.dataset.id = recipe.id;
 
 			// Add an event listener to the recipe list item
-			this.eventClickSave(recipeElement, 'recipeBuild', (event) => this.recipeViewOpen(event.target.dataset.id));
+			this.eventClickSave(recipeElement, 'recipeBuild', this.recipeViewOpen.bind(this, recipe));
 
 			// Check if the recipe is a favorite and update the button class
 			if (this.isFavorite(recipe)) {
@@ -422,7 +404,7 @@ class safeBite {
 			if (!this.elements.searchInput.value.length) throw new Error('searchInputEmpty');
 
 			// Get the API URL for Spoonacular, and build the search parameters.
-			const url  = this.apis.spoonacular;
+			const url  = this.apis.recipeSearch;
 			url.search = new URLSearchParams({
 				                                 apiKey: this.data.apiKeys.spoonacular,
 				                                 query:  this.elements.searchInput.value
@@ -435,7 +417,7 @@ class safeBite {
 
 			// Fetch the JSON
 			else this.apiFetchJSON({
-				                       url:      this.apis.spoonacular,
+				                       url:      this.apis.recipeSearch,
 				                       callback: recipeData => {
 					                       console.log(recipeData);
 
@@ -466,8 +448,35 @@ class safeBite {
 	}
 
 // Open the recipe view element and populate it.
-	recipeViewOpen(recipeID) {
-		// TODO: Add Recipe View Code Here
+	recipeViewOpen(recipe) {
+
+		try {
+			const url  = this.apis.recipeInfo;
+			url.pathname += `/${recipe.id}/information`;
+			url.search = new URLSearchParams({
+				                                 apiKey:           this.data.apiKeys.spoonacular,
+				                                 includeNutrition: true
+			                                 });
+
+			// Check if this item has already been searched for (to save API calls)
+			if (!recipe.recipe)
+				this.apiFetchJSON({
+					                  url:      url,
+					                  callback: recipeData => {
+						                  recipe.recipe = recipeData;
+						                  console.log(recipe);
+
+						                  // Save the history
+						                  this.apiCacheSave('searchHistory');
+
+						                  // TODO: Add recipe code... template and fill?
+					                  }
+				                  });
+		} catch (error) {
+			// Log any errors.
+			console.log('recipeSearch Error:', this.errors[error.message]);
+			return false;
+		}
 	}
 }
 
