@@ -283,19 +283,51 @@ class safeBite {
 
 	// Toggles the favorite status of a recipe
 	toggleFavorite(recipe, event) {
-		console.log(`Recipe "${recipe.title}" is currently ${this.isFavorite(recipe) ? 'a favorite' : 'not a favorite'}. Toggling status.`);
-
-		if (this.isFavorite(recipe)) {
-			this.data.favorites      = this.data.favorites.filter(fav => fav.id !== recipe.id);
-			event.target.textContent = '💔'; // Change to broken heart icon
+		console.log(`Recipe "${recipe.title}" is currently ${this.isFavorite(recipe.id) ? 'a favorite' : 'not a favorite'}. Toggling status.`);
+	
+		const heartIcon = event.target; // Assuming event.target is the heart icon
+		const isCurrentlyFavorite = this.isFavorite(recipe.id);
+	
+		// Update the favorites array
+		if (isCurrentlyFavorite) {
+			this.data.favorites = this.data.favorites.filter(fav => fav.id !== recipe.id);
+			heartIcon.textContent = '💔'; // Change to broken heart icon 
 		} else {
 			this.data.favorites.push(recipe);
-			event.target.textContent = '❤️'; // Change to heart icon
+			heartIcon.textContent = '❤️'; // Change to heart icon 
 		}
+		// Update the modal list without closing it
+		this.refreshFavoritesModal();
 
 		console.log(`Updated favorites:`, this.data.favorites);
 		this.apiCacheSave('favorites');
 	}
+
+	// Method to refresh the favorites list in the modal without closing it
+refreshFavoritesModal() {
+    const modalFavoritesList = document.getElementById('modal-favorites-list');
+    this.eventClickChildrenRemove(modalFavoritesList, 'favoriteItemClick');
+
+    // Repopulate the modal favorites list
+    this.data.favorites.forEach(favorite => {
+        const card = this.templates.favoritesListItem.cloneNode(true).firstElementChild;
+        const favoriteButton = card.querySelector('.favorite-button');
+
+        card.querySelector('.search-image').src = favorite.image;
+        card.querySelector('.search-title').textContent = favorite.title;
+        card.dataset.id = favorite.id; 
+
+        favoriteButton.textContent = '💔';
+        this.eventClickSave(favoriteButton, 'favoriteItemClick', this.toggleFavorite.bind(this, favorite));
+
+        modalFavoritesList.appendChild(card);
+    });
+}
+
+// Checks if a recipe is a favorite by id
+isFavorite(recipeId) {
+    return this.data.favorites.some(fav => fav.id === recipeId);
+}
 
 	/***
 	 * Quote Function

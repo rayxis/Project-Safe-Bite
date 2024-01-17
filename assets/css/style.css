@@ -298,13 +298,15 @@ screen and (min-width: 40em) {
 }
 
 /* Ensure the close button */
-.close-button {
+/* .close-button {
   color: #FFDB2B;
   font-size: 1.5rem; 
   position: absolute; 
   top: 1rem;
   right: 1rem;
-}
+} */
+
+clear-favorites-modal
 
 /* Footer */
 .footer {
