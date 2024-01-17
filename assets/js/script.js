@@ -430,6 +430,7 @@ class safeBite {
 
 					                       // Hide landing page container
 					                       this.elements.landingContainer.classList.add('hide');
+                                 
 					                       // Save the search history
 					                       this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
 					                       this.apiCacheSave('searchHistory');
@@ -497,7 +498,7 @@ class safeBite {
 			});
 		};
 
-		// try {
+		try {
 		const url  = this.apis.recipeInfo;
 		url.pathname += `/${recipe.id}/information`;
 		url.search = new URLSearchParams({
@@ -518,11 +519,11 @@ class safeBite {
 				                       recipeFill(recipe);
 			                       }
 		                       });
-		// } catch (error) {
-		// 	// Log any errors.
-		// 	console.log('recipeSearch Error:', this.errors[error.message]);
-		// 	return false;
-		// }
+		} catch (error) {
+		 	// Log any errors.
+		 	console.log('recipeSearch Error:', this.errors[error.message]);
+		 	return false;
+		}
 	}
 }
 
