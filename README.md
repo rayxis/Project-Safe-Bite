@@ -1,7 +1,7 @@
-# Project-Safe-Bite
+# Take a BITE! - A Culinary and Photographic Adventure
 
 ## Overview
-"Take a BITE! Food and photography" is a web application designed for aspiring chefs who have a keen interest in both cooking and photography. It leverages the powerful Spoonacular API to search for various recipes and the Unsplash API to display high-quality images of those dishes, providing an immersive visual experience.
+"Take a BITE! Food and photography" is a visually immersive web application tailored for culinary enthusiasts and photographers alike. Utilizing the Spoonacular API, it offers a wide array of recipes, complemented by captivating high-quality images from Unsplash. This synergy creates a unique platform where users can explore the art of cooking alongside the beauty of food photography.
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -10,52 +10,66 @@
 4. [Installation](#installation)
 5. [Usage](#usage)
 6. [Features](#features)
-7. [Screenshot](#screenshot)
-8. [Deployed Application](#deployed-application)
-9. [License](#license)
-10. [Collaborators](#Collaborators)
-11. [Code Attribution](#code-attribution)
-12. [External Resources](#external-resources)
-13. [Credits](#credits)
+7. [Technologies Used](#technologies-used)
+8. [Screenshot](#screenshot)
+9. [Deployed Application](#deployed-application)
+10. [License](#license)
+11. [Collaborators](#Collaborators)
+12. [Code Attribution](#code-attribution)
+13. [External Resources](#external-resources)
+14. [Credits](#credits)
 
 ## User Story
 
-AS AN aspiring chef interested in photography,
-I WANT to search for recipes,
-SO THAT I can visually see the recipe, its ingredients, and directions.
+AS AN aspiring chef with a passion for photography,
+I WANT a platform where I can explore and visualize diverse recipes,
+SO THAT I can enhance both my culinary skills and my photographic creativity.
 
 ## Acceptance Criteria
 
-- Users can enter a type of recipe they are interested in.
-- The application displays search results with recipe cards that include photos and a brief overview.
-- Users can view detailed information about the recipe, including ingredients, directions, and a larger photo, when they select a recipe.
+- User-friendly interface for easy recipe search.
+- High-quality images accompanying each recipe for a visual feast.
+- Detailed recipes with ingredients and step-by-step directions.
+- Responsiveness for an optimal experience on various devices.
 
 ## Installation
 
-To get started with the Project Safe Bite!:
-
-1. Clone the starter code from the repository.
-2. Make your own repository with the cloned starter code.
-3. Open the `index.html` file in a web browser to start scheduling your day.
+To run "Take a BITE!" locally:
+1. Clone the repository to your local machine.
+2. Open the `index.html` file in a web browser to launch the application.
 
 ## Usage
 
-To use the application, simply type a query into the search bar on the homepage. The application will then display a list of recipes along with their images. Click on a recipe card to view detailed information about the recipe.
+- **Searching for Recipes**: Enter a query in the search bar and hit the search button.
+- **Viewing Recipe Details**: Click on a recipe in the search results to view detailed instructions and ingredients.
+- **Managing Favorites**: Click the heart icon on a recipe to add/remove it from your favorites.
+- **Accessing Favorites**: View your favorite recipes by clicking the 'Show Favorites' button.
+- **Clearing History**: Clear your search history using the 'Delete History' button.
 
 ## Features
 
-- Recipe search functionality.
-- Dynamic display of recipes and high-quality images.
-- Detailed view for ingredients and cooking instructions.
-- Mobile-responsive design.
+- **Recipe Search**: Users can search for recipes by name, ingredients, or dish type.
+- **Favorites Management**: Ability to mark recipes as favorites and manage them through a dedicated section.
+- **Search History**: Automatically records user's search history for easy access to previously searched recipes.
+- **Responsive Design**: Optimized for different screen sizes for a seamless experience on both desktop and mobile devices.
+- **Dynamic Content Loading**: JavaScript-driven dynamic loading of recipe content without the need for page refreshes.
+
+
+## Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript
+- Foundation CSS Framework
+- External APIs (Spoonacular API for recipes, API Ninjas for food quotes)
 
 ## Screenshot
 
-![Project Safe Bite!](/assets/JS/images/placeholder.png)
+![Take a BITE! Interface](/assets/JS/images/placeholder.png)
 
 ## Deployed Application
 
-Check out the deployed application here: [Project Safe Bite!]()
+Experience "Take a BITE!" live: [Link to the application](#)
 
 
 ## License
@@ -74,15 +88,19 @@ This project is licensed under the [MIT License](LICENSE.txt).
 ## Code Attribution
 
 We make use of the following APIs:
-- [Spoonacular API](https://spoonacular.com/food-api) for recipe data.
+- [Spoonacular API](https://spoonacular.com/food-api) for culinary data.
 - [Quotes API](https://api-ninjas.com/) for food quotes.
 
 ## External Resources
 
+- [Foundation CSS Framework Documentation](https://get.foundation/sites/docs/)
+- [jQuery Documentation](https://api.jquery.com/)
 - [Spoonacular API Documentation](https://spoonacular.com/food-api/docs)
-- [Quotes API Documentation](https://api-ninjas.com/api/quotes)
+- [Unsplash API Documentation](https://unsplash.com/documentation)
 - Additional resources such as tutorials, Stack Overflow discussions, etc.
 
 ## Credits
 - [Flaticon](https://www.flaticon.com/) for button icons (i.e. search.png, trash-can.png).
-- [Ella Olsson on Unsplash](https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE) for vegetable salad photo (i.e. landing-photo.png).
+- [Ella Olsson on Unsplash](https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE) for vegetable salad photo (i.e. landing-photo.png)
+- Spoonacular API for providing a comprehensive database of recipes.
+- API Ninjas for the delightful food quotes API.
