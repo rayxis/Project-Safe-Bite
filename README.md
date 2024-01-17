@@ -16,6 +16,7 @@
 10. [Collaborators](#Collaborators)
 11. [Code Attribution](#code-attribution)
 12. [External Resources](#external-resources)
+13. [Credits](#credits)
 
 ## User Story
 
@@ -74,10 +75,14 @@ This project is licensed under the [MIT License](LICENSE.txt).
 
 We make use of the following APIs:
 - [Spoonacular API](https://spoonacular.com/food-api) for recipe data.
-- [Unsplash API](https://unsplash.com/developers) for food photography.
+- [Quotes API](https://api-ninjas.com/) for food quotes.
 
 ## External Resources
 
 - [Spoonacular API Documentation](https://spoonacular.com/food-api/docs)
-- [Unsplash API Documentation](https://unsplash.com/documentation)
+- [Quotes API Documentation](https://api-ninjas.com/api/quotes)
 - Additional resources such as tutorials, Stack Overflow discussions, etc.
+
+## Credits
+- [Flaticon](https://www.flaticon.com/) for button icons (i.e. search.png, trash-can.png).
+- [Ella Olsson on Unsplash](https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE) for vegetable salad photo (i.e. landing-photo.png).
