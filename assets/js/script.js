@@ -15,14 +15,17 @@ class safeBite {
 	};
 	// Elements
 	elements  = {
-		favoritesClearButton: document.querySelector('#clear-favorites'),  // Favorites clear button
-		favoritesList:        document.querySelector('#favorites-list'),   // Favorites list
-		favoritesShowButton:  document.querySelector('#show-favorites'),   // Favorites show button
-		historyClearButton:   document.querySelector('#clear-history'),    // History clear button
-		searchButton:         document.querySelector('#search-button'),    // Search button
-		searchHistory:        document.querySelector('#search-history'),   // Search history list
-		searchInput:          document.querySelector('#search-recipe'),    // Search recipe input
-		searchResults:        document.querySelector('#search-results')    // Search results list
+		favoritesClearButton: document.querySelector('#clear-favorites'),  	// Favorites clear button
+		favoritesList:        document.querySelector('#favorites-list'),   	// Favorites list
+		favoritesShowButton:  document.querySelector('#show-favorites'),   	// Favorites show button
+		historyClearButton:   document.querySelector('#clear-history'),    	// History clear button
+		landingContainer: 	  document.querySelector('#landing-container'), // Landing container
+		searchButton:         document.querySelector('#search-button'),    	// Search button
+		searchHistory:        document.querySelector('#search-history'),   	// Search history list
+		searchInput:          document.querySelector('#search-recipe'),    	// Search recipe input
+		searchResults:        document.querySelector('#search-results'),    // Search results list
+		quote:				  document.querySelector('#quote'),				// Food quote
+		quoteAuthor: 		  document.querySelector('#quote-author')		// Food quote author
 	};
 	// Errors
 	errors    = {
@@ -43,7 +46,8 @@ class safeBite {
 		// Load the API key
 		this.data.apiKeys = apiKeys;
 
-		// Load the cache.
+		// Load the random food quote and cache.
+		this.quoteFetch();
 		this.apiCacheLoad('searchHistory');
 		this.apiCacheLoad('favorites');
 
@@ -59,7 +63,7 @@ class safeBite {
 		this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
 
 		// Event listener for clearing search history
-		// this.eventClickSave(this.elements.historyClearButton, 'clearHistory', () => this.recipeHistoryClear());
+		this.eventClickSave(this.elements.historyClearButton, 'clearHistory', () => this.recipeHistoryClear());
 		// document.getElementById('clear-history').addEventListener('click', () => this.recipeHistoryClear());
 
 		// Event listener for showing favorites
@@ -301,11 +305,10 @@ class safeBite {
 		this.apiFetchJSON({
 			                  url:      url,
 			                  headers:  {'X-Api-Key': this.data.apiKeys.apiNinjas},
-			                  callback: quote => console.log(quote)
-			                  // this.elements.someElement.textContent = `"${quote[0].quote}" - ${quote[0].author}`;
-			                  // TODO: Remove console.log() and uncomment the string, replace 'someElement' with
-			                  //  whatever element. Alternatively, two separate elements (quote and author)
-			                  //  could be filled, and adjusted with CSS.
+			                  callback: quote => {
+										this.elements.quote.textContent = quote[0].quote;
+										this.elements.quoteAuthor.textContent = `— ${quote[0].author}`;
+							  }
 		                  });
 	}
 
@@ -317,7 +320,7 @@ class safeBite {
 	recipeHistoryClear() {
 		// Clear the searchHistory array, save the cache and clear the history list.
 		this.data.searchHistory = [];
-		this.apiCacheSave();
+		this.apiCacheSave('searchHistory');
 		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
 	}
 
@@ -412,6 +415,8 @@ class safeBite {
 
 			// Check if this item has already been searched for (to save API calls)
 			if (searchResult = this.data.searchHistory.find(item => item.searchQuery === searchQuery)) {
+				// Hide landing page container
+				this.elements.landingContainer.classList.add("hide");
 				this.recipeResultList(searchResult);
 			}
 
@@ -421,6 +426,8 @@ class safeBite {
 				                       callback: recipeData => {
 					                       console.log(recipeData);
 
+										   // Hide landing page container
+										   this.elements.landingContainer.classList.add("hide");
 					                       // Save the search history
 					                       this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
 					                       this.apiCacheSave('searchHistory');
@@ -449,7 +456,8 @@ class safeBite {
 
 // Open the recipe view element and populate it.
 	recipeViewOpen(recipe) {
-
+		// Hide the search results
+		this.elements.searchResults.classList.add("hide");
 		try {
 			const url  = this.apis.recipeInfo;
 			url.pathname += `/${recipe.id}/information`;

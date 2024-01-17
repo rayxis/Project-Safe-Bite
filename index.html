@@ -28,10 +28,19 @@
 					<button type="submit" class="button secondary" id="search-button"><img
 							src="./assets/images/search.png"></button>
 				</form>
-				<!-- Recipe Search Results -->
 				<div class="grid-container mt-2rem">
-					<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0"
-					    id="search-results">
+					<!-- Landing content -->
+					<div class="grid-x" id="landing-container">
+						<div class="cell medium-6 large-8">
+							<h4>Welcome to Take a BITE!</h4>
+							<p>Please search and browse inspiring, delicious food and beverage recipes
+							that will leave your mouth watering and craving another bite.</p>
+							<p class="custom-blockquote" id="quote"><p class="custom-cite" id="quote-author"></p></p>
+						</div>
+						<img class="cell medium-6 large-4" src="./assets/images/landing-photo.png" />
+					</div>
+					<!-- Recipe Search Results -->
+					<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0" id="search-results">
 						<!-- Search results will be populated here by JavaScript -->
 					</ul>
 				</div>
@@ -43,8 +52,7 @@
 				<div class="grid-x align-middle align-justify">
 					<h3 class="mb-0">Search History: </h3>
 					<button type="reset" class="button alert" id="clear-history" aria-label="Delete History"><img
-							src="./assets/images/trash-can.png"
-							onclick="tab.recipeHistoryClear();"></button>
+							src="./assets/images/trash-can.png"></button>
 				</div>
 				<div>
 					<ul class="no-bullet border-top mt-1vh" id="search-history">
@@ -53,15 +61,13 @@
 				</div>
 
 				<!-- Favorites Section -->
-				<div class="favorites-section mt-1vh">
-					<h3>Favorites:</h3>
-					<ul id="favorites-list border-top mt-1vh" class="no-bullet pl-3rem">
+				<h3>Favorites:</h3>
+				<ul id="favorites-list" class="no-bullet border-top mt-1vh">
 						<!-- Favorites will be populated here by JavaScript -->
-					</ul>
-					<div class="grid-x align-middle align-justify">
-						<button type="button" class="button" id="show-favorites">Show Favorites</button>
-						<button type="button" class="button alert" id="clear-favorites">Clear Favorites</button>
-					</div>
+				</ul>
+				<div class="grid-x align-middle align-justify">
+					<button type="button" class="button" id="show-favorites">Show Favorites</button>
+					<button type="button" class="button alert" id="clear-favorites">Clear Favorites</button>
 				</div>
 			</aside>
 
@@ -73,7 +79,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-content">
+				<div class="modal-content border-top border-bottom">
 					<ul id="modal-favorites-list" class="no-bullet">
 						<!-- Favorite items will be listed here in the modal -->
 					</ul>
