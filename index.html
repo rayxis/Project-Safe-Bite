@@ -34,6 +34,19 @@
 					    id="search-results">
 						<!-- Search results will be populated here by JavaScript -->
 					</ul>
+
+					<!-- Recipe View -->
+					<section id="recipe-card" class="hide">
+						<h2 id="recipe-title"></h2>
+						<img id="recipe-image" src="" alt="">
+						<ul id="recipe-ingredients">
+							<!-- Recipe ingredients will be listed here -->
+						</ul>
+						<ol id="recipe-directions">
+							<!-- Recipe directions will be listed here -->
+						</ol>
+					</section>
+
 				</div>
 			</main>
 
@@ -101,6 +114,21 @@
 			</div>
 		</template>
 
+		<!-- Template for recipe ingredient -->
+		<template id="recipe-directions-item">
+			<li class="recipe-direction"></li>
+		</template>
+
+		<!-- Template for recipe ingredient -->
+		<template id="recipe-ingredient-item">
+			<li class="recipe-ingredient"></li>
+		</template>
+
+		<!-- Template for search history button -->
+		<template id="search-history-item">
+			<li class="button clear"></li>
+		</template>
+
 		<!-- Template for recipe search result card -->
 		<template id="search-results-item">
 			<div class="grid-x cell">
@@ -113,11 +141,6 @@
 					</div>
 				</div>
 			</div>
-		</template>
-
-		<!-- Template for search history button -->
-		<template id="search-history-item">
-			<li class="button clear"></li>
 		</template>
 
 		<script src="https://code.jquery.com/jquery-3.7.1.js"

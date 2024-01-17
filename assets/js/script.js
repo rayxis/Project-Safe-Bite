@@ -15,14 +15,22 @@ class safeBite {
 	};
 	// Elements
 	elements  = {
-		favoritesClearButton: document.querySelector('#clear-favorites'),  // Favorites clear button
-		favoritesList:        document.querySelector('#favorites-list'),   // Favorites list
-		favoritesShowButton:  document.querySelector('#show-favorites'),   // Favorites show button
-		historyClearButton:   document.querySelector('#clear-history'),    // History clear button
-		searchButton:         document.querySelector('#search-button'),    // Search button
-		searchHistory:        document.querySelector('#search-history'),   // Search history list
-		searchInput:          document.querySelector('#search-recipe'),    // Search recipe input
-		searchResults:        document.querySelector('#search-results')    // Search results list
+		favoritesClearButton: document.querySelector('#clear-favorites'),  	 // Favorites clear button
+		favoritesList:        document.querySelector('#favorites-list'),   	 // Favorites list
+		favoritesShowButton:  document.querySelector('#show-favorites'),   	 // Favorites show button
+		historyClearButton:   document.querySelector('#clear-history'),    	 // History clear button
+		landingContainer:     document.querySelector('#landing-container'),  // Landing container
+		recipeCard:           document.querySelector('#recipe-card'),        // Recipe view
+		recipeDirectionList:  document.querySelector('#recipe-directions'),  // Recipe ingredient list
+		recipeImage:          document.querySelector('#recipe-image'),       // Recipe image
+		recipeIngredientList: document.querySelector('#recipe-ingredients'), // Recipe ingredient list
+		recipeTitle:          document.querySelector('#recipe-title'),       // Recipe title
+		searchButton:         document.querySelector('#search-button'),    	 // Search button
+		searchHistory:        document.querySelector('#search-history'),   	 // Search history list
+		searchInput:          document.querySelector('#search-recipe'),    	 // Search recipe input
+		searchResults:        document.querySelector('#search-results'),     // Search results list
+		quote:                document.querySelector('#quote'),				 // Food quote
+		quoteAuthor:          document.querySelector('#quote-author')		 // Food quote author
 	};
 	// Errors
 	errors    = {
@@ -34,16 +42,19 @@ class safeBite {
 		cacheFavoritesKey:     'favorites'         // Favorites cache key
 	};
 	templates = {
-		favoritesListItem: document.querySelector('#favorites-list-item').content,
-		searchResultsItem: document.querySelector('#search-results-item').content,
-		searchHistoryItem: document.querySelector('#search-history-item').content
+		favoritesListItem:    document.querySelector('#favorites-list-item').content,
+		recipeDirectionItem:  document.querySelector('#recipe-directions-item').content,
+		recipeIngredientItem: document.querySelector('#recipe-ingredient-item').content,
+		searchResultsItem:    document.querySelector('#search-results-item').content,
+		searchHistoryItem:    document.querySelector('#search-history-item').content
 	};
 
 	constructor() {
 		// Load the API key
 		this.data.apiKeys = apiKeys;
 
-		// Load the cache.
+		// Load the random food quote and cache.
+		this.quoteFetch();
 		this.apiCacheLoad('searchHistory');
 		this.apiCacheLoad('favorites');
 
@@ -59,7 +70,7 @@ class safeBite {
 		this.elements.searchButton.addEventListener('click', this.recipeSearch.bind(this));
 
 		// Event listener for clearing search history
-		// this.eventClickSave(this.elements.historyClearButton, 'clearHistory', () => this.recipeHistoryClear());
+		this.eventClickSave(this.elements.historyClearButton, 'clearHistory', () => this.recipeHistoryClear());
 		// document.getElementById('clear-history').addEventListener('click', () => this.recipeHistoryClear());
 
 		// Event listener for showing favorites
@@ -301,11 +312,10 @@ class safeBite {
 		this.apiFetchJSON({
 			                  url:      url,
 			                  headers:  {'X-Api-Key': this.data.apiKeys.apiNinjas},
-			                  callback: quote => console.log(quote)
-			                  // this.elements.someElement.textContent = `"${quote[0].quote}" - ${quote[0].author}`;
-			                  // TODO: Remove console.log() and uncomment the string, replace 'someElement' with
-			                  //  whatever element. Alternatively, two separate elements (quote and author)
-			                  //  could be filled, and adjusted with CSS.
+			                  callback: quote => {
+				                  this.elements.quote.textContent       = quote[0].quote;
+				                  this.elements.quoteAuthor.textContent = `— ${quote[0].author}`;
+			                  }
 		                  });
 	}
 
@@ -317,7 +327,7 @@ class safeBite {
 	recipeHistoryClear() {
 		// Clear the searchHistory array, save the cache and clear the history list.
 		this.data.searchHistory = [];
-		this.apiCacheSave();
+		this.apiCacheSave('searchHistory');
 		this.eventClickChildrenRemove(this.elements.searchHistory, 'historyBuild');
 	}
 
@@ -352,7 +362,7 @@ class safeBite {
 		// Remove all the children elements.
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
 
-		const recipeBuild = recipe => {
+		const recipeItemBuild = recipe => {
 			const recipeElement  = this.templates.searchResultsItem.cloneNode(true).firstElementChild;
 			const recipeImage    = recipeElement.querySelector('.search-image');
 			const recipeTitle    = recipeElement.querySelector('.search-title');
@@ -377,11 +387,6 @@ class safeBite {
 
 			// Add event listener for the favorite button
 			this.eventClickSave(favoriteButton, 'favoriteItemClick', this.toggleFavorite.bind(this, recipe));
-			// favoriteButton.addEventListener('click', (event) => {
-			// 	event.stopPropagation(); // Prevent triggering any parent event
-			// 	this.toggleFavorite(recipe.id, favoriteButton); // Pass the button to the toggle function
-			// 	console.log(`Favorite button for recipe ID ${recipe.id} clicked.`);
-			// });
 
 			// Return the element
 			return recipeElement;
@@ -389,7 +394,7 @@ class safeBite {
 
 		// Loop through the recipe results and fill the list.
 		recipeData.results.forEach(
-			recipe => this.elements.searchResults.appendChild(recipeBuild(recipe)));
+			recipe => this.elements.searchResults.appendChild(recipeItemBuild(recipe)));
 	}
 
 	// Search for recipes
@@ -412,6 +417,8 @@ class safeBite {
 
 			// Check if this item has already been searched for (to save API calls)
 			if (searchResult = this.data.searchHistory.find(item => item.searchQuery === searchQuery)) {
+				// Hide landing page container
+				this.elements.landingContainer.classList.add('hide');
 				this.recipeResultList(searchResult);
 			}
 
@@ -421,6 +428,8 @@ class safeBite {
 				                       callback: recipeData => {
 					                       console.log(recipeData);
 
+					                       // Hide landing page container
+					                       this.elements.landingContainer.classList.add('hide');
 					                       // Save the search history
 					                       this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
 					                       this.apiCacheSave('searchHistory');
@@ -443,40 +452,77 @@ class safeBite {
 
 // Close the recipe view element
 	recipeViewClose() {
-		// TODO: Add Recipe View Close Code Here
+		// Unhide the search results, hide the recipe.
+		this.elements.searchResults.classList.remove('hide');
+		this.elements.recipeCard.classList.add('hide');
 
+		// Clear the text and lists
+		this.elements.recipeTitle.textContent = '';
+		this.elements.recipeImage.src         = '';
+		[...this.elements.recipeDirectionList.children].forEach(child => child.remove());
+		[...this.elements.recipeIngredientList.children].forEach(child => child.remove());
 	}
 
 // Open the recipe view element and populate it.
 	recipeViewOpen(recipe) {
+		// Function to fill the recipe card
+		const recipeFill = (dish) => {
+			// Hide the search results, show the recipe.
+			this.elements.searchResults.classList.add('hide');
+			this.elements.recipeCard.classList.remove('hide');
 
-		try {
-			const url  = this.apis.recipeInfo;
-			url.pathname += `/${recipe.id}/information`;
-			url.search = new URLSearchParams({
-				                                 apiKey:           this.data.apiKeys.spoonacular,
-				                                 includeNutrition: true
-			                                 });
+			console.log(dish.title);
+			// Set the title and image
+			this.elements.recipeTitle     = dish.title;
+			this.elements.recipeImage.src = dish.image;
 
-			// Check if this item has already been searched for (to save API calls)
-			if (!recipe.recipe)
-				this.apiFetchJSON({
-					                  url:      url,
-					                  callback: recipeData => {
-						                  recipe.recipe = recipeData;
-						                  console.log(recipe);
+			// Ingredients
+			dish.recipe.extendedIngredients.forEach(ingredient => {
+				// Clone the ingredient list item
+				const ingredientElement = this.templates.recipeIngredientItem.cloneNode(true).firstElementChild;
 
-						                  // Save the history
-						                  this.apiCacheSave('searchHistory');
+				// Set the text for the ingredient, and add to the list.
+				ingredientElement.textContent = ingredient.original;
+				this.elements.recipeIngredientList.appendChild(ingredientElement);
+			});
 
-						                  // TODO: Add recipe code... template and fill?
-					                  }
-				                  });
-		} catch (error) {
-			// Log any errors.
-			console.log('recipeSearch Error:', this.errors[error.message]);
-			return false;
-		}
+			// Directions
+			dish.recipe.analyzedInstructions[0].steps.forEach(direction => {
+				// Clone the direction list item
+				const directionElement = this.templates.recipeDirectionItem.cloneNode(true).firstElementChild;
+
+				// Set the text for the direction, and add to the list.
+				directionElement.textContent = direction.step;
+				this.elements.recipeDirectionList.appendChild(directionElement);
+			});
+		};
+
+		// try {
+		const url  = this.apis.recipeInfo;
+		url.pathname += `/${recipe.id}/information`;
+		url.search = new URLSearchParams({
+			                                 apiKey:           this.data.apiKeys.spoonacular,
+			                                 includeNutrition: true
+		                                 });
+
+		// Check if this item has already been searched for (to save API calls)
+		if (recipe.recipe) recipeFill(recipe);
+		else this.apiFetchJSON({
+			                       url:      url,
+			                       callback: recipeData => {
+				                       recipe.recipe = recipeData;
+				                       console.log(recipe);
+
+				                       // Save the history and fill the data.
+				                       this.apiCacheSave('searchHistory');
+				                       recipeFill(recipe);
+			                       }
+		                       });
+		// } catch (error) {
+		// 	// Log any errors.
+		// 	console.log('recipeSearch Error:', this.errors[error.message]);
+		// 	return false;
+		// }
 	}
 }
 
