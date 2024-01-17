@@ -458,6 +458,9 @@ class safeBite {
 					                       // Hide landing page container
 					                       this.elements.landingContainer.classList.add('hide');
 
+					                       // Hide landing page container
+					                       this.elements.landingContainer.classList.add('hide');
+                                 
 					                       // Save the search history
 					                       this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
 					                       this.apiCacheSave('searchHistory');
@@ -549,6 +552,7 @@ class safeBite {
 			// Log any errors.
 			console.log('recipeSearch Error:', this.errors[error.message]);
 			return false;
+
 		}
 	}
 }
