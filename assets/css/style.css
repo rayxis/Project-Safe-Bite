@@ -269,8 +269,12 @@ screen and (min-width: 40em) {
 
 /* Responsive adjustments for the modal */
 #modal-favorites-list .favorite-button {
+  position: absolute;
+  bottom: 0;          
+  right: 0;           
   font-size: 1.5rem;
   margin-left: 0.5rem;
+  text-align: end;
 }
 
 #modal-favorites-list .favorite-button.is-favorite {
