@@ -1,7 +1,7 @@
 # Take a BITE! - A Culinary and Photographic Adventure
 
 ## Overview
-"Take a BITE! Food and photography" is a visually immersive web application tailored for culinary enthusiasts and photographers alike. Utilizing the Spoonacular API, it offers a wide array of recipes, complemented by captivating high-quality images from Unsplash. This synergy creates a unique platform where users can explore the art of cooking alongside the beauty of food photography.
+"Take a BITE! Food and photography" is a visually immersive web application tailored for culinary enthusiasts and photographers alike. Utilizing the Spoonacular API, it offers a wide array of recipes, complemented by captivating high-quality images. This synergy creates a unique platform where users can explore the art of cooking alongside the beauty of food photography.
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -67,7 +67,7 @@ To run "Take a BITE!" locally:
 
 ![Take a BITE! Interface](/assets/JS/images/placeholder.png)
 
-## Deployed Application
+## Bite THIS!
 
 Experience "Take a BITE!" live: [Link to the application](#)
 
@@ -82,7 +82,7 @@ This project is licensed under the [MIT License](LICENSE.txt).
 - [April Vasquez](https://github.com/apri1mayrain)
 - [Kyle Huff](https://github.com/Kykesh)
 - [Matthew Garza](https://github.com/mgarza0802)
-- [Raymond Beliveau](https://github.com/rayxis)
+- [Ray Beliveau](https://github.com/rayxis)
 
 
 ## Code Attribution
@@ -96,7 +96,7 @@ We make use of the following APIs:
 - [Foundation CSS Framework Documentation](https://get.foundation/sites/docs/)
 - [jQuery Documentation](https://api.jquery.com/)
 - [Spoonacular API Documentation](https://spoonacular.com/food-api/docs)
-- [Unsplash API Documentation](https://unsplash.com/documentation)
+
 - Additional resources such as tutorials, Stack Overflow discussions, etc.
 
 ## Credits
@@ -104,3 +104,8 @@ We make use of the following APIs:
 - [Ella Olsson on Unsplash](https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE) for vegetable salad photo (i.e. landing-photo.png)
 - Spoonacular API for providing a comprehensive database of recipes.
 - API Ninjas for the delightful food quotes API.
+
+- April Vasquez
+- Kyle Huff
+- Matthew Garza
+- Ray Beliveau
