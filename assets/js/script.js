@@ -386,6 +386,7 @@ class safeBite {
 	recipeResultList(recipeData) {
 		// Remove all the children elements.
 		this.eventClickChildrenRemove(this.elements.searchResults, 'recipeBuild');
+		this.recipeViewClose();
 
 		const recipeItemBuild = recipe => {
 			const recipeElement  = this.templates.searchResultsItem.cloneNode(true).firstElementChild;
@@ -434,52 +435,52 @@ class safeBite {
 
 		event.preventDefault();
 
-		try {
-			// If there's no text in the search box, throw an error.
-			if (!this.elements.searchInput.value.length) throw new Error('searchInputEmpty');
+		// try {
+		// If there's no text in the search box, throw an error.
+		if (!this.elements.searchInput.value.length) throw new Error('searchInputEmpty');
 
-			// Get the API URL for Spoonacular, and build the search parameters.
-			const url  = this.apis.recipeSearch;
-			url.search = new URLSearchParams({
-				                                 apiKey: this.data.apiKeys.spoonacular,
-				                                 query:  this.elements.searchInput.value
-			                                 });
+		// Get the API URL for Spoonacular, and build the search parameters.
+		const url  = this.apis.recipeSearch;
+		url.search = new URLSearchParams({
+			                                 apiKey: this.data.apiKeys.spoonacular,
+			                                 query:  this.elements.searchInput.value
+		                                 });
 
-			// Check if this item has already been searched for (to save API calls)
-			if (searchResult = this.data.searchHistory.find(item => item.searchQuery === searchQuery)) {
-				// Hide landing page container
-				this.elements.landingContainer.classList.add('hide');
-				this.recipeResultList(searchResult);
-			}
-
-			// Fetch the JSON
-			else this.apiFetchJSON({
-				                       url:      this.apis.recipeSearch,
-				                       callback: recipeData => {
-					                       // Hide landing page container
-					                       this.elements.landingContainer.classList.add('hide');
-
-					                       // Hide landing page container
-					                       this.elements.landingContainer.classList.add('hide');
-
-					                       // Save the search history
-					                       this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
-					                       this.apiCacheSave('searchHistory');
-					                       this.recipeHistoryList();
-
-					                       // Build the recipe result list.
-					                       this.recipeResultList(recipeData);
-				                       }
-			                       });
-
-			// Random food quote
-			this.quoteFetch();
-
-		} catch (error) {
-			// Log any errors.
-			console.log('recipeSearch Error:', this.errors[error.message]);
-			return false;
+		// Check if this item has already been searched for (to save API calls)
+		if (searchResult = this.data.searchHistory.find(item => item.searchQuery === searchQuery)) {
+			// Hide landing page container
+			this.elements.landingContainer.classList.add('hide');
+			this.recipeResultList(searchResult);
 		}
+
+		// Fetch the JSON
+		else this.apiFetchJSON({
+			                       url:      this.apis.recipeSearch,
+			                       callback: recipeData => {
+				                       // Hide landing page container
+				                       this.elements.landingContainer.classList.add('hide');
+
+				                       // Hide landing page container
+				                       this.elements.landingContainer.classList.add('hide');
+
+				                       // Save the search history
+				                       this.data.searchHistory.push({searchQuery: searchQuery, ...recipeData});
+				                       this.apiCacheSave('searchHistory');
+				                       this.recipeHistoryList();
+
+				                       // Build the recipe result list.
+				                       this.recipeResultList(recipeData);
+			                       }
+		                       });
+
+		// Random food quote
+		this.quoteFetch();
+
+		// } catch (error) {
+		// 	// Log any errors.
+		// 	console.log('recipeSearch Error:', this.errors[error.message]);
+		// 	return false;
+		// }
 	}
 
 // Close the recipe view element
@@ -504,8 +505,8 @@ class safeBite {
 			this.elements.recipeCard.classList.remove('hide');
 
 			// Set the title and image
-			this.elements.recipeTitle     = dish.title;
-			this.elements.recipeImage.src = dish.image;
+			this.elements.recipeTitle.textContent = dish.title;
+			this.elements.recipeImage.src         = dish.image;
 
 			// Ingredients
 			dish.recipe.extendedIngredients.forEach(ingredient => {
