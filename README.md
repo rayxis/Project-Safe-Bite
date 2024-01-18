@@ -1,4 +1,4 @@
-# Take a BITE! - A Culinary and Photographic Adventure
+# Take a BITE! - A Recipe Inspiration and Viewer
 
 ## Overview
 "Take a BITE! Food and photography" is a visually immersive web application tailored for culinary enthusiasts and photographers alike. Utilizing the Spoonacular API, it offers a wide array of recipes, complemented by captivating high-quality images. This synergy creates a unique platform where users can explore the art of cooking alongside the beauty of food photography.
@@ -94,7 +94,6 @@ We make use of the following APIs:
 ## External Resources
 
 - [Foundation CSS Framework Documentation](https://get.foundation/sites/docs/)
-- [jQuery Documentation](https://api.jquery.com/)
 - [Spoonacular API Documentation](https://spoonacular.com/food-api/docs)
 
 - Additional resources such as tutorials, Stack Overflow discussions, etc.
@@ -105,7 +104,7 @@ We make use of the following APIs:
 - Spoonacular API for providing a comprehensive database of recipes.
 - API Ninjas for the delightful food quotes API.
 
-- April Vasquez
-- Kyle Huff
-- Matthew Garza
-- Ray Beliveau
+- April Vasquez - Creative concept designer Designer, UX/UI, w
+- Kyle Huff - HTML / JavaScript Support, Technical Writer.
+- Matthew Garza - Design, CSS support
+- Ray Beliveau - Lead JavaScript Developer, API wizard
