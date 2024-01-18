@@ -3,7 +3,7 @@
 # Take a BITE! - A Recipe Inspiration and Viewer
 
 ## Overview
-"Take a BITE! - A Recipe Inspiration and Viewer" is a visually immersive web application tailored for culinary enthusiasts and photographers alike. Utilizing the Spoonacular API, it offers a wide array of recipes, complemented by captivating high-quality images. This synergy creates a unique platform where users can explore the art of cooking alongside the beauty of food photography.
+"Take a BITE! - A Recipe Inspiration and Viewer" is a visually immersive web application tailored for culinary enthusiasts looking to discover inspirational new recipes. Utilizing the Spoonacular and Quotes APIs, it offers a wide array of recipes, complimented by insightful or relatable food-focused quotes from top chefs and celebrities. This synergy creates a unique platform where users can explore the art of cooking accompanied by thoughtful words.
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -23,9 +23,9 @@
 
 ## User Story
 
-AS AN aspiring chef with a passion for photography,
-I WANT a platform where I can explore and visualize diverse recipes,
-SO THAT I can enhance both my culinary skills and my photographic creativity.
+AS A creative chef exploring new recipes,
+I WANT a platform where I can view diverse recipes,
+SO THAT I can become inspired and enhance my culinary expertise.
 
 ## Acceptance Criteria
 
@@ -67,7 +67,10 @@ To run "Take a BITE!" locally:
 
 ## Screenshot
 
-![Take a BITE! Interface](/assets/JS/images/placeholder.png)
+![Take a BITE! Landing Page](/assets/images/preview/landing-page.png)
+![Take a BITE! Recipe Search Results](/assets/images/preview/recipe-search.png)
+![Take a BITE! View Recipe](/assets/images/preview/view-recipe.png)
+![Take a BITE! Favorites Modal](/assets/images/preview/favorites.png)
 
 ## Bite THIS!
 
@@ -81,10 +84,10 @@ This project is licensed under the [MIT License](LICENSE.txt).
 
 ## Collaborators
 
-- [April Vasquez](https://github.com/apri1mayrain)
-- [Kyle Huff](https://github.com/Kykesh)
-- [Matthew Garza](https://github.com/mgarza0802)
-- [Ray Beliveau](https://github.com/rayxis)
+- [April Vasquez](https://github.com/apri1mayrain) - Front-end Developer, UX/UI Design
+- [Kyle Huff](https://github.com/Kykesh) - HTML / JavaScript Support, Technical Writer
+- [Matthew Garza](https://github.com/mgarza0802) -  Design, CSS Support
+- [Ray Beliveau](https://github.com/rayxis) - Lead JavaScript Developer, API Wizard
 
 
 ## Code Attribution
@@ -97,16 +100,10 @@ We make use of the following APIs:
 
 - [Foundation CSS Framework Documentation](https://get.foundation/sites/docs/)
 - [Spoonacular API Documentation](https://spoonacular.com/food-api/docs)
-
 - Additional resources such as tutorials, Stack Overflow discussions, etc.
 
 ## Credits
 - [Flaticon](https://www.flaticon.com/) for button icons (i.e. search.png, trash-can.png).
 - [Ella Olsson on Unsplash](https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE) for vegetable salad photo (i.e. landing-photo.png)
 - Spoonacular API for providing a comprehensive database of recipes.
-- API Ninjas for the delightful food quotes API.
-
-- April Vasquez - Creative concept designer Designer, UX/UI, w
-- Kyle Huff - HTML / JavaScript Support, Technical Writer.
-- Matthew Garza - Design, CSS support
-- Ray Beliveau - Lead JavaScript Developer, API wizard
+- API Ninjas for the delightful food quotes.

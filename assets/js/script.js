@@ -1,4 +1,4 @@
-class safeBite {
+class takeABite {
 	// API URLs
 	apis      = {
 		apiNinjas:    new URL('https://api.api-ninjas.com/v1/quotes'),
@@ -487,9 +487,6 @@ class safeBite {
 				                       }
 			                       });
 
-			// Random food quote
-			this.quoteFetch();
-
 		} catch (error) {
 			// Log any errors.
 			console.log('recipeSearch Error:', this.errors[error.message]);
@@ -581,4 +578,4 @@ class safeBite {
 }
 
 // Load the site
-const sb = new safeBite();
+const tab = new takeABite();
