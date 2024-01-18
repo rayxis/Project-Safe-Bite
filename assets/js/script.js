@@ -19,6 +19,7 @@ class safeBite {
 		favoritesShowButton:  document.querySelector('#show-favorites'),   	 // Favorites show button
 		historyClearButton:   document.querySelector('#clear-history'),    	 // History clear button
 		landingContainer:     document.querySelector('#landing-container'),  // Landing container
+		noFavorites:		  document.querySelector('#no-favorites'),		 // No favorites text
 		recipeCard:           document.querySelector('#recipe-card'),        // Recipe view
 		recipeDirectionList:  document.querySelector('#recipe-directions'),  // Recipe ingredient list
 		recipeImage:          document.querySelector('#recipe-image'),       // Recipe image
@@ -238,6 +239,7 @@ class safeBite {
 		this.data.favorites = [];
 		this.apiCacheSave('favorites');
 		this.showFavorites();
+		this.elements.noFavorites.innerHTML = 'You do not have any favorites saved.</br> Please browse recipes and like your favorites.';
 		console.log('Favorites cleared.');
 	}
 
@@ -306,6 +308,7 @@ class safeBite {
 
 	// Toggles the favorite status of a recipe
 	toggleFavorite(recipe, event) {
+		this.elements.noFavorites.textContent = '';
 		console.log(`Recipe "${recipe.title}" is currently ${this.isFavorite(recipe.id) ? 'a favorite' : 'not a favorite'}. Toggling status.`);
 
 		const heartIcon           = event.target; // Assuming event.target is the heart icon
@@ -509,9 +512,7 @@ class safeBite {
 
 // Close the recipe view element
 	recipeViewClose() {
-		// Unhide the search results, hide the recipe.
 		this.elements.searchResults.classList.remove('hide');
-		this.elements.recipeCard.classList.add('hide');
 
 		// Clear the text and lists
 		this.elements.recipeTitle.textContent = '';
@@ -527,6 +528,7 @@ class safeBite {
 			// Hide the search results, show the recipe.
 			this.elements.searchResults.classList.add('hide');
 			this.elements.recipeCard.classList.remove('hide');
+			this.elements.recipeCard.style.display = 'block';
 
 			// Set the title and image
 			this.elements.recipeTitle.textContent = dish.title;

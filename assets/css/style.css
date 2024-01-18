@@ -50,6 +50,7 @@
 
 .title-bar-title {
   font-style: italic;
+  text-shadow: 0.3rem 0.3rem 1rem #8b2a2a;
 }
 
 @media screen and (max-width: 425px) {
@@ -139,6 +140,41 @@
   font-weight: bold;
 }
 
+/* Recipe View Card */
+.recipe-container .card-divider {
+  border-top: #8fb935 0.3rem solid;
+  border-left: #8fb935 0.3rem solid;
+  border-right: #8fb935 0.3rem solid;
+}
+
+.recipe-container img {
+  border-radius: 5px; 
+  
+}
+
+.recipe-container img:hover {
+    box-shadow: 0 0 15px 5px #FFDB2B;
+}
+
+@media screen and (min-width: 1562px) {
+  .recipe-container .card-divider {
+    justify-content: space-between;
+  }
+
+  .recipe-container img {
+    border-bottom-left-radius: 50px 50px;
+    margin-right: 2.5rem;
+  }
+
+  .recipe-container .close-button {
+    font-size: 3rem;
+  }
+}
+
+.callout {
+  padding: 0;
+}
+
 /* Favorites button*/
 .favorite-button {
   position: absolute;
@@ -172,6 +208,8 @@
   background: rgb(128, 128, 128, 20%);
   border-bottom-left-radius: 15px 15px;
   border-bottom-right-radius: 15px 15px;
+  overflow-y: auto;
+  max-height: 208px;
 }
 
 #search-history .button,
@@ -269,8 +307,12 @@ screen and (min-width: 40em) {
 
 /* Responsive adjustments for the modal */
 #modal-favorites-list .favorite-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
   font-size: 1.5rem;
   margin-left: 0.5rem;
+  text-align: end;
 }
 
 #modal-favorites-list .favorite-button.is-favorite {
@@ -297,20 +339,14 @@ screen and (min-width: 40em) {
   }
 }
 
-/* Ensure the close button */
-/* .close-button {
-  color: #FFDB2B;
-  font-size: 1.5rem; 
-  position: absolute; 
-  top: 1rem;
-  right: 1rem;
-} */
-
-clear-favorites-modal
-
 /* Footer */
 .footer {
   background: rgb(128, 128, 128, 60%);
   text-align: center;
-  padding: 1vh 0;
+  padding: 1vh 1vw;
+}
+
+.footer p {
+  margin-bottom: 0.5rem;
+  font-size: .8rem;
 }

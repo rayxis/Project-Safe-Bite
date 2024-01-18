@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 		<title>Take a BITE!</title>
 		<link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.css"
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css"
 		      crossorigin="anonymous">
 		<link rel="stylesheet" href="./assets/css/style.css">
 	</head>
@@ -14,7 +14,7 @@
 		<div class="border-bottom">
 			<header class="title-bar mb-1vh">
 				<h1 class="title-bar-title">Take a BITE!</h1>
-				<img src="./assets/images/logo.png">
+				<img src="./assets/images/logo.png" alt="Red apple with bite in it (site logo)">
 			</header>
 		</div>
 
@@ -26,66 +26,82 @@
 				<form id="search-form">
 					<input type="search" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
 					<button type="submit" class="button secondary" id="search-button"><img
-							src="./assets/images/search.png"></button>
+							src="./assets/images/search.png" alt="Magnifying glass icon"></button>
 				</form>
 				<div class="grid-container mt-2rem">
 					<!-- Landing content -->
-					<div class="grid-x" id="landing-container">
+					<section class="grid-x" id="landing-container">
 						<div class="cell medium-6 large-8">
 							<h4>Welcome to Take a BITE!</h4>
 							<p>Please search and browse inspiring, delicious food and beverage recipes
 							that will leave your mouth watering and craving another bite.</p>
 							<p class="custom-blockquote" id="quote"><p class="custom-cite" id="quote-author"></p></p>
 						</div>
-						<img class="cell medium-6 large-4" src="./assets/images/landing-photo.png" />
-					</div>
+						<img
+							class="cell medium-6 large-4"
+							src="./assets/images/landing-photo.png"
+							alt="Plate of salmon salad with white rice and greenbeans and a bowl of cherry tomatoes"/>
+					</section>
 					<!-- Recipe Search Results -->
-					<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0" id="search-results">
-						<!-- Search results will be populated here by JavaScript -->
-					</ul>
-
+					<section class="recipe-search-container">
+						<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0" id="search-results">
+							<!-- Search results will be populated here by JavaScript -->
+						</ul>
+					</section>
 					<!-- Recipe View -->
-					<section id="recipe-card" class="hide">
-						<h2 id="recipe-title"></h2>
-						<img id="recipe-image" src="" alt="">
+					<section class="recipe-container card callout hide" id="recipe-card" data-closable>
+						<button class="close-button" aria-label="Close recipe" type="button" data-close data-animate="fade-in fade-out" onclick="sb.recipeViewClose();">
+							<span aria-hidden="true">&times;</span>
+						  </button>
+						<div class="card-divider grid-x align-center">
+						<h2 class="text-center align-middle" id="recipe-title"></h2>
+						<img id="recipe-image" src="" alt="Photo of the recipe">
+					</div>
+					<div class="card-section">
+						
+						<h4>Ingredients:</h4>
 						<ul id="recipe-ingredients">
 							<!-- Recipe ingredients will be listed here -->
 						</ul>
+						<h4>Directions:</h4>
 						<ol id="recipe-directions">
 							<!-- Recipe directions will be listed here -->
 						</ol>
+					</div>
 					</section>
-
-				</div>
 			</main>
 
 			<!-- Aside Content -->
 			<aside class="cell medium-4">
 				<!-- Search History -->
-				<div class="grid-x align-middle align-justify">
-					<h3 class="mb-0">Search History: </h3>
-					<button type="reset" class="button alert" id="clear-history" aria-label="Delete History"><img
-							src="./assets/images/trash-can.png"></button>
-				</div>
-				<div>
-					<ul class="no-bullet border-top mt-1vh" id="search-history">
-						<!-- Search history will be populated here by JavaScript-->
-					</ul>
-				</div>
+				<section class="search-history-container">
+					<div class="grid-x align-middle align-justify">
+						<h3 class="mb-0">Search History: </h3>
+						<button type="reset" class="button alert" id="clear-history" aria-label="Delete History"><img
+								src="./assets/images/trash-can.png" alt="Trash can icon"></button>
+					</div>
+					<div>
+						<ul class="no-bullet border-top mt-1vh" id="search-history">
+							<!-- Search history will be populated here by JavaScript-->
+						</ul>
+					</div>
+				</section>
 
 				<!-- Favorites Section -->
-				<h3>Favorites:</h3>
-				<ul id="favorites-list" class="no-bullet border-top mt-1vh">
+				<section class="favorites-container">
+					<h3>Favorites:</h3>
+					<ul id="favorites-list" class="no-bullet border-top mt-1vh">
 						<!-- Favorites will be populated here by JavaScript -->
-				</ul>
-				<div class="grid-x align-middle align-justify">
-					<button type="button" class="button" id="show-favorites">Show Favorites</button>
-					<button type="button" class="button alert" id="clear-favorites">Clear Favorites</button>
-				</div>
+					</ul>
+					<div class="grid-x align-middle align-justify">
+						<button type="button" class="button" id="show-favorites">Show Favorites</button>
+						<button type="button" class="button alert" id="clear-favorites">Clear Favorites</button>
+					</div>
+				</section>
 			</aside>
 
 			<!-- Favorites Modal -->
-			<div class="reveal" id="favorites-modal" data-reveal>
+			<section class="reveal" id="favorites-modal" data-reveal>
 				<div class="modal-header">
 					<h2>Favorites</h2>
 					<button class="close-button" data-close aria-label="Close modal" type="button">
@@ -93,29 +109,45 @@
 					</button>
 				</div>
 				<div class="modal-content border-top border-bottom">
+					<p class="text-center" id="no-favorites">You do not have any favorites saved.</br> Please browse recipes and like your favorites.</p>
 					<ul id="modal-favorites-list" class="no-bullet">
 						<!-- Favorite items will be listed here in the modal -->
 					</ul>
 				</div>
 				<div class="modal-footer grid-x align-right">
-					<button class="button secondary small" data-close>Close</button> 
+					<button class="button secondary small" data-close>Close</button>
 					<!-- <button type="button" class="button alert" id="clear-favorites-modal">Clear Favorites</button> -->
 				</div>
-			</div>
-		</div>
+				</div>
+			</section>
 
 		<!-- Footer -->
-		<div class="border-top">
-			<footer class="footer mt-1vh ">
-				<h6 class="mb-0">Created By</h6>
-				<h6 class="mb-0">Credits</h6>
+		<section class="footer-container border-top">
+			<footer class="footer grid-x align-middle mt-1vh">
+				<div class="cell large-6">
+					<h6 class="mb-0">Created By Team No Name:</h6>
+					<p>
+						<a href="https://github.com/apri1mayrain">April Vasquez</a>,
+						<a href="https://github.com/Kykesh">Kyle Huff</a>,
+						<a href="https://github.com/mgarza0802">Matthew Garza</a>, and 
+						<a href="https://github.com/rayxis">Ray Beliveau</a>
+					</p>
+				</div>
+				<div class="cell large-6">
+					<h6 class="mb-0">Credits:</h6>
+					<p>
+						<a href="https://www.flaticon.com/">Flaticon</a> for icons and
+						<a href="https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE">Ella Olsson on Unsplash</a> for "vegetable salad" photo.
+					</p>
+				</div>
 			</footer>
-		</div>
+		</section>
 
+		<!-- Templates -->
 		<!-- Template for favorites item -->
 		<template id="favorites-list-item">
 			<div class="card">
-				<img class="search-image" src=""/>
+				<img class="search-image" src="" alt="Photo of favorite recipe"/>
 				<p class="search-title"></p>
 				<button class="favorite-button"></button>
 			</div>
@@ -140,7 +172,7 @@
 		<template id="search-results-item">
 			<div class="grid-x cell">
 				<div class="card">
-					<img class="search-image" src="" data-id="">
+					<img class="search-image" src="" data-id="" alt="Photo of the recipe">
 					<div class="grid-x card-section align-middle align-center">
 						<p class="search-title"></p>
 						<!-- Add a favorites button -->
