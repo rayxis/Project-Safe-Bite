@@ -1,8 +1,6 @@
 const apiKeys = {
+	// https://api-ninjas.com/api
+	apiNinjas: 'k5yif66Z66/38hmt873yfg==ZO2R3SNz5FDWtDwM',
 	// https://spoonacular.com/food-api
 	spoonacular: '82fefa954e6d4b74a0335fd10cb3b3ff',
-	unsplash: {
-		accessKey: 'NbeyFju2pfgZ3RqX7H8o17HLE-b2e_9wP_G9ga4ySNg',
-		secretKet: 'N4i8LcGmeoj_NcJCAwT-7chwHvPEK2sZXYjbjpNgcQM'
-	}
 };
