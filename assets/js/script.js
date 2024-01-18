@@ -322,6 +322,27 @@ class safeBite {
 		this.apiCacheSave('favorites');
 	}
 
+	// Method to refresh the favorites list in the modal without closing it
+	refreshFavoritesModal() {
+		const modalFavoritesList = document.getElementById('modal-favorites-list');
+		this.eventClickChildrenRemove(modalFavoritesList, 'favoriteItemClick');
+
+		// Repopulate the modal favorites list
+		this.data.favorites.forEach(favorite => {
+			const card           = this.templates.favoritesListItem.cloneNode(true).firstElementChild;
+			const favoriteButton = card.querySelector('.favorite-button');
+
+			card.querySelector('.search-image').src         = favorite.image;
+			card.querySelector('.search-title').textContent = favorite.title;
+			card.dataset.id                                 = favorite.id;
+
+			favoriteButton.textContent = '💔';
+			this.eventClickSave(favoriteButton, 'favoriteItemClick', this.toggleFavorite.bind(this, favorite));
+
+			modalFavoritesList.appendChild(card);
+		});
+	}
+
 	/***
 	 * Quote Function
 	 ***/

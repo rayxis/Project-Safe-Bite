@@ -202,56 +202,68 @@ screen and (min-width: 40em) {
 /* Modal Customization */
 #favorites-modal .modal-header {
   padding: 1rem;
-  /* Header color to match the site's header */
   background: #e64747;
-  /* Text color for the header */
   color: white;
+  text-align: center;
+  border-top-left-radius: 8px; 
+  border-top-right-radius: 8px;
 }
 
 #favorites-modal .modal-content {
   padding: 1rem;
-  background: #fefefe;
-  /* Set a max height for scrollable content */
-  max-height: 60vh;
-   /* Enable scrolling for overflow */
-  overflow-y: auto;
+  background: #fff; 
+  max-height: 80vh; 
+  overflow-y: auto; /* Enable scrolling */
+  border-left: 5px solid #FFDB2B;
+  border-right: 5px solid #FFDB2B;
 }
 
 #favorites-modal .modal-footer {
   padding: 1rem;
   text-align: right;
-  /* Footer color to match the site's header */
   background: #e64747;
+  border-bottom-left-radius: 8px; 
+  border-bottom-right-radius: 8px;
 }
 
-/* Ensure the close button matches your site's theme */
-.close-button {
-  /* Adjust the color to match your site's theme */
-  color: #FFDB2B;
-}
-
-/* Styling for the list inside the modal to match your site's design */
+ /* Styling for the list inside the modal */
 #modal-favorites-list {
-  padding-left: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0; 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); 
+  gap: 10px;
 }
 
 #modal-favorites-list li {
   padding: 0.5rem;
   border-bottom: 1px solid #eee;
-  background: #fff;
-  /* White background for each list item */
-  cursor: pointer;
-  /* Indicates an actionable item */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background: #f9f9f9;
 }
 
-/* Button styling inside the modal footer to match your site */
+#modal-favorites-list img {
+  width: 100%; 
+  height: auto; 
+  border-radius: 4px;
+}
+
 #favorites-modal .button {
-  /* Background color to match the site's card section */
-  background: #8fb935;
+  background: #8fb935; 
+  border-radius: 8px; 
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s; 
 }
 
 /* Hover effects for the modal buttons */
 #favorites-modal .button:hover {
+  background-color: #76a82b; 
+  transform: scale(1.05); 
   opacity: 0.8;
 }
 
@@ -266,12 +278,35 @@ screen and (min-width: 40em) {
 }
 
 .reveal {
-  min-width: 300px;
-  max-height: 80%;
-  overflow: auto;
-  border: none;
-  background: transparent;
+  min-width: 50vw; 
+  max-height: 80vh;
+  overflow-y: auto; 
+  border-radius: 8px; 
+  background: rgba(255, 255, 255, 0.98); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
+
+/* Responsive adjustments for the modal */
+@media screen and (max-width: 768px) {
+  .reveal {
+    min-width: 70vw; /* Adjust modal width for smaller screens */
+  }
+
+  #modal-favorites-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust grid for smaller screens */
+  }
+}
+
+/* Ensure the close button */
+/* .close-button {
+  color: #FFDB2B;
+  font-size: 1.5rem; 
+  position: absolute; 
+  top: 1rem;
+  right: 1rem;
+} */
+
+clear-favorites-modal
 
 /* Footer */
 .footer {
