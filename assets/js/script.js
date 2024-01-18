@@ -284,12 +284,15 @@ class safeBite {
 			// Clone the favorite list item template
 			const card           = this.templates.favoritesListItem.cloneNode(true).firstElementChild;
 			const favoriteButton = card.querySelector('.favorite-button');
+			const favoriteImage  = card.querySelector('.search-image');
 
-			// Fill in the data
-			card.querySelector('.search-image').src         = recipe.image;
-			card.querySelector('.search-image').textContent = recipe.title;
+			// Fill in the image
+			favoriteImage.src = recipe.image;
+			favoriteImage.alt = recipe.title;
+			// Title
+			card.querySelector('.search-title').textContent = recipe.title;
 
-			favoriteButton.textContent = '💔'; // Change to broken heart icon
+			favoriteButton.textContent = '❤️'; // Change to heart icon
 			this.eventClickSave(favoriteButton, 'favoriteItemClick', this.toggleFavorite.bind(this, recipe));
 
 			// Append the card to the modal list
