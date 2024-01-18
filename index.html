@@ -34,41 +34,45 @@
 						<div class="cell medium-6 large-8">
 							<h4>Welcome to Take a BITE!</h4>
 							<p>Please search and browse inspiring, delicious food and beverage recipes
-							that will leave your mouth watering and craving another bite.</p>
-							<p class="custom-blockquote" id="quote"><p class="custom-cite" id="quote-author"></p></p>
+								that will leave your mouth watering and craving another bite.</p>
+							<p class="custom-blockquote" id="quote">
+							<p class="custom-cite" id="quote-author"></p></p>
 						</div>
 						<img
-							class="cell medium-6 large-4"
-							src="./assets/images/landing-photo.png"
-							alt="Plate of salmon salad with white rice and greenbeans and a bowl of cherry tomatoes"/>
+								class="cell medium-6 large-4"
+								src="./assets/images/landing-photo.png"
+								alt="Plate of salmon salad with white rice and greenbeans and a bowl of cherry tomatoes"/>
 					</section>
 					<!-- Recipe Search Results -->
 					<section class="recipe-search-container">
-						<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0" id="search-results">
+						<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0"
+						    id="search-results">
 							<!-- Search results will be populated here by JavaScript -->
 						</ul>
 					</section>
 					<!-- Recipe View -->
 					<section class="recipe-container card callout hide" id="recipe-card" data-closable>
-						<button class="close-button" aria-label="Close recipe" type="button" data-close data-animate="fade-in fade-out" onclick="sb.recipeViewClose();">
+						<button class="close-button" aria-label="Close recipe" type="button" data-close
+						        data-animate="fade-in fade-out" onclick="sb.recipeViewClose();">
 							<span aria-hidden="true">&times;</span>
-						  </button>
+						</button>
 						<div class="card-divider grid-x align-center">
-						<h2 class="text-center align-middle" id="recipe-title"></h2>
-						<img id="recipe-image" src="" alt="Photo of the recipe">
-					</div>
-					<div class="card-section">
-						
-						<h4>Ingredients:</h4>
-						<ul id="recipe-ingredients">
-							<!-- Recipe ingredients will be listed here -->
-						</ul>
-						<h4>Directions:</h4>
-						<ol id="recipe-directions">
-							<!-- Recipe directions will be listed here -->
-						</ol>
-					</div>
+							<h2 class="text-center align-middle" id="recipe-title"></h2>
+							<img id="recipe-image" src="" alt="Photo of the recipe">
+						</div>
+						<div class="card-section">
+
+							<h4>Ingredients:</h4>
+							<ul id="recipe-ingredients">
+								<!-- Recipe ingredients will be listed here -->
+							</ul>
+							<h4>Directions:</h4>
+							<ol id="recipe-directions">
+								<!-- Recipe directions will be listed here -->
+							</ol>
+						</div>
 					</section>
+				</div>
 			</main>
 
 			<!-- Aside Content -->
@@ -99,27 +103,29 @@
 					</div>
 				</section>
 			</aside>
+		</div>
 
-			<!-- Favorites Modal -->
-			<section class="reveal" id="favorites-modal" data-reveal>
-				<div class="modal-header">
-					<h2>Favorites</h2>
-					<button class="close-button" data-close aria-label="Close modal" type="button">
-						<!-- <span aria-hidden="true">&times;</span> -->
-					</button>
-				</div>
-				<div class="modal-content border-top border-bottom">
-					<p class="text-center" id="no-favorites">You do not have any favorites saved.</br> Please browse recipes and like your favorites.</p>
-					<ul id="modal-favorites-list" class="no-bullet">
-						<!-- Favorite items will be listed here in the modal -->
-					</ul>
-				</div>
-				<div class="modal-footer grid-x align-right">
-					<button class="button secondary small" data-close>Close</button>
-					<!-- <button type="button" class="button alert" id="clear-favorites-modal">Clear Favorites</button> -->
-				</div>
-				</div>
-			</section>
+
+		<!-- Favorites Modal -->
+		<section class="reveal" id="favorites-modal" data-reveal>
+			<div class="modal-header">
+				<h2>Favorites</h2>
+				<button class="close-button" data-close aria-label="Close modal" type="button">
+					<!-- <span aria-hidden="true">&times;</span> -->
+				</button>
+			</div>
+			<div class="modal-content border-top border-bottom">
+				<p class="text-center" id="no-favorites">You do not have any favorites saved.</br> Please browse
+					recipes and like your favorites.</p>
+				<ul id="modal-favorites-list" class="no-bullet">
+					<!-- Favorite items will be listed here in the modal -->
+				</ul>
+			</div>
+			<div class="modal-footer grid-x align-right">
+				<button class="button secondary small" data-close>Close</button>
+				<!-- <button type="button" class="button alert" id="clear-favorites-modal">Clear Favorites</button> -->
+			</div>
+		</section>
 
 		<!-- Footer -->
 		<section class="footer-container border-top">
@@ -129,7 +135,7 @@
 					<p>
 						<a href="https://github.com/apri1mayrain">April Vasquez</a>,
 						<a href="https://github.com/Kykesh">Kyle Huff</a>,
-						<a href="https://github.com/mgarza0802">Matthew Garza</a>, and 
+						<a href="https://github.com/mgarza0802">Matthew Garza</a>, and
 						<a href="https://github.com/rayxis">Ray Beliveau</a>
 					</p>
 				</div>
@@ -137,7 +143,9 @@
 					<h6 class="mb-0">Credits:</h6>
 					<p>
 						<a href="https://www.flaticon.com/">Flaticon</a> for icons and
-						<a href="https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE">Ella Olsson on Unsplash</a> for "vegetable salad" photo.
+						<a href="https://unsplash.com/photos/vegetable-salad-KPDbRyFOTnE">Ella Olsson on
+							Unsplash</a>
+						for "vegetable salad" photo.
 					</p>
 				</div>
 			</footer>
