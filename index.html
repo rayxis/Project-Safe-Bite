@@ -2,45 +2,167 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-		<title>Take a Bite!</title>
-		<link rel="icon" type="image/png" href="/Project-Safe-Bite/assets/js/images/SB-icon.png">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css" crossorigin="anonymous">
+		<title>Take a BITE!</title>
+		<link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.css"
+		      crossorigin="anonymous">
 		<link rel="stylesheet" href="./assets/css/style.css">
 	</head>
 
 	<body>
-		<header>
-			<h1>Take a Bite!</h1>
-		</header>
-	
-		<form id="search-form">
-			<input type="text" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
-			<button id="search-button">🔍</button>
-			<ul id="search-history" style="display: none;">
-				<!-- Search history will be populated here by JavaScript -->
-			</ul>
-		</form>
+		<!-- Header -->
+		<div class="border-bottom">
+			<header class="title-bar mb-1vh">
+				<h1 class="title-bar-title">Take a BITE!</h1>
+				<img src="./assets/images/logo.png">
+			</header>
+		</div>
 
-		<section id="recipe-display">
-			<div id="recipe-info">
-				<!-- Recipe info from  Spoonacular API-->
-			</div>
-			
-			<div id="recipe-image">
-				<!-- Image from Unsplash API -->
-			</div>
-		</section>
+		<!-- Search Form -->
+<form id="search-form">
+	<input type="text" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
+	<button id="search-button">🔍</button>
+	<ul id="search-history">
+	  <!-- Search history will be populated here by JavaScript -->
+	</ul>
+  </form>
 
-		<template id="">
-			<li class="search-item"> 
-				<!-- placeholder -->
-			</li>
+		<!-- Wrapper for Main + Aside Content -->
+		<div class="grid-x grid-padding-y grid-padding-x">
+			<!-- Main Content -->
+			<main class="cell medium-8">
+				<!-- Search Bar -->
+				<form id="search-form">
+					<input type="search" id="search-recipe" placeholder="Search Recipe" aria-label="Search Recipe">
+					<button type="submit" class="button secondary" id="search-button"><img
+							src="./assets/images/search.png"></button>
+				</form>
+				<div class="grid-container mt-2rem">
+					<!-- Landing content -->
+					<div class="grid-x" id="landing-container">
+						<div class="cell medium-6 large-8">
+							<h4>Welcome to Take a BITE!</h4>
+							<p>Please search and browse inspiring, delicious food and beverage recipes
+							that will leave your mouth watering and craving another bite.</p>
+							<p class="custom-blockquote" id="quote"><p class="custom-cite" id="quote-author"></p></p>
+						</div>
+						<img class="cell medium-6 large-4" src="./assets/images/landing-photo.png" />
+					</div>
+					<!-- Recipe Search Results -->
+					<ul class="grid-x small-up-2 medium-up-3 large-up-5 align-center text-center ml-0" id="search-results">
+						<!-- Search results will be populated here by JavaScript -->
+					</ul>
+
+					<!-- Recipe View -->
+					<section id="recipe-card" class="hide">
+						<h2 id="recipe-title"></h2>
+						<img id="recipe-image" src="" alt="">
+						<ul id="recipe-ingredients">
+							<!-- Recipe ingredients will be listed here -->
+						</ul>
+						<ol id="recipe-directions">
+							<!-- Recipe directions will be listed here -->
+						</ol>
+					</section>
+
+				</div>
+			</main>
+
+			<!-- Aside Content -->
+			<aside class="cell medium-4">
+				<!-- Search History -->
+				<div class="grid-x align-middle align-justify">
+					<h3 class="mb-0">Search History: </h3>
+					<button type="reset" class="button alert" id="clear-history" aria-label="Delete History"><img
+							src="./assets/images/trash-can.png"></button>
+				</div>
+				<div>
+					<ul class="no-bullet border-top mt-1vh" id="search-history">
+						<!-- Search history will be populated here by JavaScript-->
+					</ul>
+				</div>
+
+				<!-- Favorites Section -->
+				<h3>Favorites:</h3>
+				<ul id="favorites-list" class="no-bullet border-top mt-1vh">
+						<!-- Favorites will be populated here by JavaScript -->
+				</ul>
+				<div class="grid-x align-middle align-justify">
+					<button type="button" class="button" id="show-favorites">Show Favorites</button>
+					<button type="button" class="button alert" id="clear-favorites">Clear Favorites</button>
+				</div>
+			</aside>
+
+			<!-- Favorites Modal -->
+			<div class="reveal" id="favorites-modal" data-reveal>
+				<div class="modal-header">
+					<h2>Favorites</h2>
+					<button class="close-button" data-close aria-label="Close modal" type="button">
+						<!-- <span aria-hidden="true">&times;</span> -->
+					</button>
+				</div>
+				<div class="modal-content border-top border-bottom">
+					<ul id="modal-favorites-list" class="no-bullet">
+						<!-- Favorite items will be listed here in the modal -->
+					</ul>
+				</div>
+				<div class="modal-footer grid-x align-right">
+					<button class="button secondary small" data-close>Close</button> 
+					<!-- <button type="button" class="button alert" id="clear-favorites-modal">Clear Favorites</button> -->
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<div class="border-top">
+			<footer class="footer mt-1vh ">
+				<h6 class="mb-0">Created By</h6>
+				<h6 class="mb-0">Credits</h6>
+			</footer>
+		</div>
+
+		<!-- Template for favorites item -->
+		<template id="favorites-list-item">
+			<div class="card">
+				<img class="search-image" src=""/>
+				<p class="search-title"></p>
+				<button class="favorite-button"></button>
+			</div>
 		</template>
 
+		<!-- Template for recipe ingredient -->
+		<template id="recipe-directions-item">
+			<li class="recipe-direction"></li>
+		</template>
+
+		<!-- Template for recipe ingredient -->
+		<template id="recipe-ingredient-item">
+			<li class="recipe-ingredient"></li>
+		</template>
+
+		<!-- Template for search history button -->
+		<template id="search-history-item">
+			<li class="button clear"></li>
+		</template>
+
+		<!-- Template for recipe search result card -->
+		<template id="search-results-item">
+			<div class="grid-x cell">
+				<div class="card">
+					<img class="search-image" src="" data-id="">
+					<div class="grid-x card-section align-middle align-center">
+						<p class="search-title"></p>
+						<!-- Add a favorites button -->
+						<button type="button" class="favorite-button">💔</button>
+					</div>
+				</div>
+			</div>
+		</template>
 
 		<script src="https://code.jquery.com/jquery-3.7.1.js"
-				integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-				crossorigin="anonymous"></script>
+		        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+		        crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/foundation-sites/dist/js/foundation.min.js"></script>
 		<script src="assets/js/secret.js"></script>
 		<script src="assets/js/script.js"></script>
 	</body>
