@@ -61,7 +61,7 @@
 
 /* Main */
 /* Search Bar */
-.input-group>:first-child
+.input-group>:first-child,
 .input-group>:first-child.input-group-button>* {
     border-radius: 10px 0 0 10px;
 }
