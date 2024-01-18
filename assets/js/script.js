@@ -278,7 +278,8 @@ class safeBite {
 
 		// Populate the modal favorites list
 		this.data.favorites.forEach(favorite => {
-			const recipe = this.data.searchHistory.find(recipe => recipe.id === favorite);
+			// Flatten the recipe results list into a single array, and finding the favorite match.
+			const recipe = this.data.searchHistory.flatMap(recipeList => recipeList.results).find(recipe => recipe.id === favorite);
 
 			// Clone the favorite list item template
 			const card           = this.templates.favoritesListItem.cloneNode(true).firstElementChild;
