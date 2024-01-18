@@ -1,7 +1,9 @@
+![Title of project (Take a BITE!) with food background](/assets/images/title.png)
+
 # Take a BITE! - A Recipe Inspiration and Viewer
 
 ## Overview
-"Take a BITE! Food and photography" is a visually immersive web application tailored for culinary enthusiasts and photographers alike. Utilizing the Spoonacular API, it offers a wide array of recipes, complemented by captivating high-quality images. This synergy creates a unique platform where users can explore the art of cooking alongside the beauty of food photography.
+"Take a BITE! - A Recipe Inspiration and Viewer" is a visually immersive web application tailored for culinary enthusiasts and photographers alike. Utilizing the Spoonacular API, it offers a wide array of recipes, complemented by captivating high-quality images. This synergy creates a unique platform where users can explore the art of cooking alongside the beauty of food photography.
 
 ## Table of Contents
 1. [Overview](#overview)
