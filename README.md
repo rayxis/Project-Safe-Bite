@@ -74,7 +74,7 @@ To run "Take a BITE!" locally:
 
 ## Bite THIS!
 
-Experience "Take a BITE!" live: [Link to the application](#)
+Experience "Take a BITE!" live: [https://rayxis.github.io/Project-Take-A-Bite/](https://rayxis.github.io/Project-Take-A-Bite/)
 
 
 ## License
