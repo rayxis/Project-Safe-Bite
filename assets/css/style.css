@@ -21,10 +21,6 @@
   margin: 0;
 }
 
-.pl-3rem {
-  padding-left: 0.3rem;
-}
-
 .ml-0 {
   margin-left: 0;
 }
@@ -47,15 +43,15 @@
 
 /* Header */
 .title-bar {
-  background: #e64747 !important;
+  background: #e64747;
   justify-content: center;
   gap: 4vw;
 }
 
 .title-bar-title {
   font-style: italic;
+  text-shadow: 0.3rem 0.3rem 1rem #8b2a2a;
 }
-
 
 @media screen and (max-width: 425px) {
   .title-bar img {
@@ -91,6 +87,39 @@
   display: block;
 }
 
+/* Landing Container */
+.custom-blockquote {
+  font-style: italic;
+  margin: 0;
+  padding: 0.5625rem 1.25rem 0 1.1875rem;
+  border-left: 1px solid #cacaca;
+}
+
+.custom-cite {
+  font-size: 0.8125rem;
+  padding-left: 1.1875rem;
+  border-left: 1px solid #cacaca;
+}
+
+@media screen and (width: 1024px) {
+  #landing-container img {
+    max-height: 207px;
+  }
+}
+
+@media screen and (width: 768px) {
+  #landing-container img {
+    max-height: 226px;
+  }
+}
+
+@media screen and (width: 425px) {
+  #landing-container img {
+    max-width: 350px;
+    margin: auto;
+  }
+}
+
 /* Search Results */
 .card {
   position: relative;
@@ -109,6 +138,41 @@
 .card .search-title:hover {
   cursor: pointer;
   font-weight: bold;
+}
+
+/* Recipe View Card */
+.recipe-container .card-divider {
+  border-top: #8fb935 0.3rem solid;
+  border-left: #8fb935 0.3rem solid;
+  border-right: #8fb935 0.3rem solid;
+}
+
+.recipe-container img {
+  border-radius: 5px; 
+  
+}
+
+.recipe-container img:hover {
+    box-shadow: 0 0 15px 5px #FFDB2B;
+}
+
+@media screen and (min-width: 1562px) {
+  .recipe-container .card-divider {
+    justify-content: space-between;
+  }
+
+  .recipe-container img {
+    border-bottom-left-radius: 50px 50px;
+    margin-right: 2.5rem;
+  }
+
+  .recipe-container .close-button {
+    font-size: 3rem;
+  }
+}
+
+.callout {
+  padding: 0;
 }
 
 /* Favorites button*/
@@ -139,20 +203,24 @@
 }
 
 /* Aside */
-/* Search History */
-#search-history {
+/* Search History + Favorites List */
+#search-history, #favorites-list  {
   background: rgb(128, 128, 128, 20%);
   border-bottom-left-radius: 15px 15px;
   border-bottom-right-radius: 15px 15px;
+  overflow-y: auto;
+  max-height: 208px;
 }
 
-#search-history .button {
+#search-history .button,
+#favorites-list .button {
   display: flex;
   border-radius: 0;
   padding: 0.85em 1em;
 }
 
-#search-history li:not(:last-of-type) {
+#search-history li:not(:last-of-type),
+#favorites-list li:not(:last-of-type) {
   border-bottom: 1px solid #808080;
 }
 
@@ -172,63 +240,79 @@ screen and (min-width: 40em) {
 /* Modal Customization */
 #favorites-modal .modal-header {
   padding: 1rem;
-  /* Header color to match the site's header */
   background: #e64747;
-  /* Text color for the header */
   color: white;
+  text-align: center;
+  border-top-left-radius: 8px; 
+  border-top-right-radius: 8px;
 }
 
 #favorites-modal .modal-content {
   padding: 1rem;
-  background: #fefefe;
-  /* Set a max height for scrollable content */
-  max-height: 60vh;
-   /* Enable scrolling for overflow */
-  overflow-y: auto;
+  background: #fff; 
+  max-height: 80vh; 
+  overflow-y: auto; /* Enable scrolling */
+  border-left: 5px solid #FFDB2B;
+  border-right: 5px solid #FFDB2B;
 }
 
 #favorites-modal .modal-footer {
   padding: 1rem;
   text-align: right;
-  /* Footer color to match the site's header */
   background: #e64747;
+  border-bottom-left-radius: 8px; 
+  border-bottom-right-radius: 8px;
 }
 
-/* Ensure the close button matches your site's theme */
-.close-button {
-  /* Adjust the color to match your site's theme */
-  color: #FFDB2B;
-}
-
-/* Styling for the list inside the modal to match your site's design */
+ /* Styling for the list inside the modal */
 #modal-favorites-list {
-  padding-left: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0; 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); 
+  gap: 10px;
 }
 
 #modal-favorites-list li {
   padding: 0.5rem;
   border-bottom: 1px solid #eee;
-  background: #fff;
-  /* White background for each list item */
-  cursor: pointer;
-  /* Indicates an actionable item */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background: #f9f9f9;
 }
 
-/* Button styling inside the modal footer to match your site */
+#modal-favorites-list img {
+  width: 100%; 
+  height: auto; 
+  border-radius: 4px;
+}
+
 #favorites-modal .button {
-  /* Background color to match the site's card section */
-  background: #8fb935;
+  background: #8fb935; 
+  border-radius: 8px; 
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s; 
 }
 
 /* Hover effects for the modal buttons */
 #favorites-modal .button:hover {
+  background-color: #76a82b; 
+  transform: scale(1.05); 
   opacity: 0.8;
 }
 
 /* Responsive adjustments for the modal */
 #modal-favorites-list .favorite-button {
+  position: absolute;
+  bottom: 0;          
+  right: 0;           
   font-size: 1.5rem;
   margin-left: 0.5rem;
+  text-align: end;
 }
 
 #modal-favorites-list .favorite-button.is-favorite {
@@ -236,16 +320,33 @@ screen and (min-width: 40em) {
 }
 
 .reveal {
-  min-width: 300px;
-  max-height: 80%;
-  overflow: auto;
-  border: none;
-  background: transparent;
+  min-width: 50vw; 
+  max-height: 80vh;
+  overflow-y: auto; 
+  border-radius: 8px; 
+  background: rgba(255, 255, 255, 0.98); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+/* Responsive adjustments for the modal */
+@media screen and (max-width: 768px) {
+  .reveal {
+    min-width: 70vw; /* Adjust modal width for smaller screens */
+  }
+
+  #modal-favorites-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust grid for smaller screens */
+  }
 }
 
 /* Footer */
 .footer {
   background: rgb(128, 128, 128, 60%);
   text-align: center;
-  padding: 1vh 0;
+  padding: 1vh 1vw;
+}
+
+.footer p {
+  margin-bottom: 0.5rem;
+  font-size: .8rem;
 }
